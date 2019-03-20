@@ -1,0 +1,6 @@
+cd /home/eclips/SuperNET/iguana
+nohup ./m_notary "" notary_nosplit &
+cd /home/eclips/komodo/src
+sleep 400
+cd /home/eclips/SuperNET/iguana
+./dpowassets
