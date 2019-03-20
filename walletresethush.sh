@@ -8,7 +8,7 @@ daemon="hushd -pubkey=${pubkey}"
 daemon_process_regex="hushd.*\-pubkey"
 cli="hush-cli"
 wallet_file="${HOME}/.hush/wallet.dat"
-nn_address="t1YZHW5ugppyRKESnJNEXzBtJadJ16Hx94r"
+nn_address="t1ZKE9vWTxzUcgYtTB6gKAg3HMRYZggeueC"
 
 ./walletreset.sh \
   "${coin}" \
