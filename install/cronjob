@@ -1,2 +1,0 @@
-*/10 * * * * /home/eclips/tools/recharge.py >/dev/null 2>&1 >> /tmp/recharcheutxo.log
-15 3 */2 * * /home/eclips/tools/walletresetkmd.sh >/dev/null 2>&1 >> /tmp/resetwalletkmd.log
