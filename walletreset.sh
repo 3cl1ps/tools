@@ -55,9 +55,6 @@ temp_privkey=$(${cli} dumpprivkey ${temp_address})
 echo "[${coin}] Temp address: ${temp_address}"
 echo "[${coin}] Temp privkey: ${temp_privkey}"
 
-echo "[${coin}] Writing the temp privkey to a file incase something goes wrong"
-echo ${temp_privkey} >> "${coin}_temp_privkeys"
-
 echo "[${coin}] Unlocking all UTXOs"
 ./unlockutxos.sh ${coin}
 echo "[${coin}] UTXOs unlocked"
