@@ -158,8 +158,6 @@ coinlist=(
 'WLC 210000000'
 'ZILLA 11000000'
 'ZEX 0'
-'KSB 0'
-'OUR 0'
 )
 utxoamt=0.00010000
 ntrzdamt=-0.00083600
