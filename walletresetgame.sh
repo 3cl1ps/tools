@@ -1,14 +1,12 @@
 #!/bin/bash
 cd "${BASH_SOURCE%/*}" || exit
 
-pubkey=$(cat pubkey.txt)
-
 coin="GAME"
-daemon="gamecreditsd -pubkey=${pubkey}"
+daemon="gamecreditsd -pubkey=$PUBKEY"
 daemon_process_regex="gamecreditsd.*\-pubkey"
 cli="gamecredits-cli"
 wallet_file="${HOME}/.gamecredits/wallet.dat"
-nn_address="GZHYZiRGyXJKAP8rAcXJTdHG1w9KsJRjgj"
+nn_address=$GAMEADDRESS
 
 ./walletreset.sh \
   "${coin}" \
