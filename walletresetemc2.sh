@@ -1,14 +1,12 @@
 #!/bin/bash
 cd "${BASH_SOURCE%/*}" || exit
 
-pubkey=$(cat pubkey.txt)
-
 coin="EMC2"
-daemon="einsteiniumd -pubkey=${pubkey}"
+daemon="einsteiniumd -pubkey=$PUBKEY"
 daemon_process_regex="einsteiniumd.*\-pubkey"
 cli="einsteinium-cli"
 wallet_file="${HOME}/.einsteinium/wallet.dat"
-nn_address="EYbXeAvqRcyw5DSR3Wri2zvKsQrcQG2A1a"
+nn_address=$EMC2ADDRESS
 
 ./walletreset.sh \
   "${coin}" \
