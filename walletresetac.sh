@@ -1,16 +1,14 @@
 #!/bin/bash
 cd "${BASH_SOURCE%/*}" || exit
 
-pubkey=$PUBKEY
-
 # Coin we're resetting
 coin=$1
 
-daemon="komodod $(./listassetchainparams ${coin}) -pubkey=${pubkey}"
+daemon="komodod $(./listassetchainparams ${coin}) -pubkey=$PUBKEY"
 daemon_process_regex="komodod.*\-ac_name=${coin}"
 cli="komodo-cli -ac_name=${coin}"
 wallet_file="${HOME}/.komodo/${coin}/wallet.dat"
-nn_address="RPxsaGNqTKzPnbm5q7QXwu7b6EZWuLxJG3"
+nn_address=$KMDADDRESS
 
 ./walletreset.sh \
   "${coin}" \
