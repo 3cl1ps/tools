@@ -1,7 +1,7 @@
 #!/bin/bash
 cd "${BASH_SOURCE%/*}" || exit
 
-pubkey=$(cat pubkey.txt)
+pubkey=$PUBKEY
 
 # Coin we're resetting
 coin=$1
