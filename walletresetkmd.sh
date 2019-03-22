@@ -1,14 +1,12 @@
 #!/bin/bash
 cd "${BASH_SOURCE%/*}" || exit
 
-pubkey=$(cat pubkey.txt)
-
 coin="KMD"
 daemon="komodod -notary -pubkey=${pubkey}"
 daemon_process_regex="komodod.*\-notary"
 cli="komodo-cli"
 wallet_file="${HOME}/.komodo/wallet.dat"
-nn_address="RQipE6ycbVVb9vCkhqrK8PGZs2p5YmiBtg"
+nn_address=$KMDADDRESS
 
 ./walletreset.sh \
   "${coin}" \
