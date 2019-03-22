@@ -1,14 +1,12 @@
 #!/bin/bash
 cd "${BASH_SOURCE%/*}" || exit
 
-pubkey=$(cat pubkey.txt)
-
 coin="CHIPS"
-daemon="chipsd -pubkey=${pubkey}"
+daemon="chipsd -pubkey=$PUBKEY"
 daemon_process_regex="chipsd.*\-pubkey"
 cli="chips-cli"
 wallet_file="${HOME}/.chips/wallet.dat"
-nn_address="RQipE6ycbVVb9vCkhqrK8PGZs2p5YmiBtg"
+nn_address=$KMDADDRESS
 
 ./walletreset.sh \
   "${coin}" \
