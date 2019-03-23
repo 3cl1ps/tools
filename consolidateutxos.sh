@@ -2,7 +2,7 @@
 cd "${BASH_SOURCE%/*}" || exit
 
 coin="KMD"
-address=$kmdaddress
+address=$KMDADDRESS
 cli=$(./listclis.sh ${coin})
 txfee="0.0002"
 date=$(date +%Y-%m-%d:%H:%M:%S)
