@@ -1,5 +1,6 @@
 #!/bin/bash
 cd "${BASH_SOURCE%/*}" || exit
+source ~/.bash_profile
 
 coin="KMD"
 address=$KMDADDRESS
