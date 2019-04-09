@@ -2,7 +2,7 @@
 cd "${BASH_SOURCE%/*}" || exit
 
 coin="HUSH"
-daemon="hushd -pubkey=${pubkey}"
+daemon="hushd -pubkey=${PUBKEY}"
 daemon_process_regex="hushd.*\-pubkey"
 cli="hush-cli"
 wallet_file="${HOME}/.hush/wallet.dat"
