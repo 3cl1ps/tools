@@ -80,6 +80,9 @@ while [[ ${stopped} -eq 0 ]]; do
   fi
 done
 
+echo "[${coin}] Backing up and removing wallet file"
+rm "${wallet_file}"
+
 echo "[${coin}] Restarting the daemon"
 ${daemon} > /dev/null 2>&1 &
 
