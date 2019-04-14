@@ -78,6 +78,7 @@ processlist=(
 'ILN'
 'RICK'
 'MORTY'
+'HUSH3'
 )
 
 count=0
