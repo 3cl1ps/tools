@@ -38,7 +38,7 @@ function show_walletsize () {
 
   OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
 
-  if [ "$SIZE" -gt "19222944" ]; then
+  if [ "$SIZE" -gt "7222944" ]; then
     OUTSTR=${RED}$OUTSTR${RESET}
   else
     OUTSTR=${GREEN}$OUTSTR${RESET}
