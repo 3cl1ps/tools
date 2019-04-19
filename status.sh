@@ -80,6 +80,7 @@ processlist=(
 'MORTY'
 'HUSH3'
 'VOTE2019'
+'KOIN'
 )
 
 count=0
