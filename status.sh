@@ -32,7 +32,6 @@ processlist=(
 'bitcoind'
 'chipsd'
 'gamecredits'
-'hush'
 'einsteinium'
 'gincoin'
 'REVS'
@@ -127,25 +126,18 @@ do
     fi
     if [ "$count" = "5" ]
     then
-            RESULT="$(hush-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
-            RESULT1="$(hush-cli -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
-            RESULT2="$(hush-cli -rpcclienttimeout=15 getbalance)"
-
-    fi
-    if [ "$count" = "6" ]
-    then
             RESULT="$(einsteinium-cli -rpcclienttimeout=15 listunspent | grep .00100000 | wc -l)"
             RESULT1="$(einsteinium-cli -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.001'|wc -l)"
             RESULT2="$(einsteinium-cli -rpcclienttimeout=15 getbalance)"
 
     fi
-    if [ "$count" = "7" ]
+    if [ "$count" = "6" ]
     then
             RESULT="$(gincoin-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
             RESULT1="$(gincoin-cli -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
             RESULT2="$(gincoin-cli -rpcclienttimeout=15 getbalance)"
     fi
-    if [ "$count" -gt "7" ]
+    if [ "$count" -gt "6" ]
     then
             RESULT="$(komodo-cli -rpcclienttimeout=15 -ac_name=${processlist[count]} listunspent | grep .00010000 | wc -l)"
             RESULT1="$(komodo-cli -ac_name=${processlist[count]} -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
