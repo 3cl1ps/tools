@@ -79,7 +79,7 @@ processlist=(
 'HUSH3'
 'VOTE2019'
 'KOIN'
-'ZEX0'
+'ZEXO'
 )
 
 count=0
