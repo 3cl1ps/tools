@@ -4,12 +4,8 @@ bitcoin-cli stop
 /home/eclips/chips3/src/chips-cli stop
 /home/eclips/game/src/gamecredits-cli stop
 /home/eclips/gincoin/src/gincoin-cli stop
-/home/eclips/hush/src/hush-cli stop
 /home/eclips/einsteinium/src/einsteinium-cli stop
-komodo-cli -ac_name=VRSC stop
-sleep 20
+sleep 10
 pkill -f komodod
 pkill -f bitcoind
-#pkill -f iguana
 rm /home/eclips/nohup.out
-rm /home/eclips/SuperNET/iguana/nohup.out
