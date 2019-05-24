@@ -36,13 +36,12 @@ function show_walletsize () {
 
   OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
 
-  if [ "$SIZE" -gt "7222944" ]; then
+  if [ "$SIZE" -gt "4222944" ]; then
     OUTSTR=${RED}$OUTSTR${RESET}
+    printf "[%8s] %16b\n" $1 $OUTSTR
   else
     OUTSTR=${GREEN}$OUTSTR${RESET}
   fi
-
-  printf "[%8s] %16b\n" $1 $OUTSTR
 }
 
 ignore_list=(
