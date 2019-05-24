@@ -28,8 +28,6 @@ function show_walletsize () {
     SIZE=$(stat ~/.einsteinium/wallet.dat | grep -Po "\d+" | head -1)
   elif [ "$1" = "GAME" ]; then
     SIZE=$(stat ~/.gamecredits/wallet.dat | grep -Po "\d+" | head -1)
-  elif [ "$1" = "HUSH" ]; then
-    SIZE=$(stat ~/.hush/wallet.dat | grep -Po "\d+" | head -1)
   elif [ "$1" = "CHIPS" ]; then
     SIZE=$(stat ~/.chips/wallet.dat | grep -Po "\d+" | head -1)
   elif [ "$1" = "GIN" ]; then
@@ -57,7 +55,6 @@ show_walletsize KMD
 show_walletsize BTC
 show_walletsize EMC2
 show_walletsize GAME
-show_walletsize HUSH
 show_walletsize CHIPS
 show_walletsize GIN
 
