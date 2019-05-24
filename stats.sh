@@ -16,7 +16,7 @@ sleepytime=600
 txscanamount=777
 
 #You can modify this list of ACs to exclude or comment out the line to show all
-ignoreacs=('VOTE2018' 'BEER' 'PIZZA')
+ignoreacs=('VOTE2018' 'BEER' 'PIZZA' 'VOTE2019')
 
 #Full path to komodo-cli
 komodoexec=/usr/local/bin/komodo-cli
@@ -27,7 +27,6 @@ declare -A repos=(
 [SUPERNET]='$HOME/SuperNET origin/dev'
 [CHIPS]='$HOME/chips3 origin/dev'
 [GAME]='$HOME/game origin/master'
-[HUSH]='$HOME/hush origin/dev'
 [EMC2]='$HOME/einsteinium origin/master'
 [GIN]='$HOME/gincoin origin/master'
 )
@@ -37,7 +36,6 @@ othercoins=(
 'BTC bitcoin-cli'
 'CHIPS chips-cli'
 'GAME gamecredits-cli'
-'HUSH hush-cli'
 'EMC2 einsteinium-cli'
 'GIN gincoin-cli'
 )
@@ -105,9 +103,6 @@ checkRepo () {
         GAME)
             printf "    "
             ;;
-        HUSH)
-            printf "    "
-            ;;
         EMC2)
             printf "    "
             ;;
@@ -139,7 +134,6 @@ coinlist=(
 'KSB 1000000000'
 'KV 1000000'
 'MESH 1000007'
-'MGNX 0'
 'MGW 999999'
 'MNZ 257142858'
 'MSHARK 1400000'
@@ -155,9 +149,12 @@ coinlist=(
 'SEC 1000000000'
 'SUPERNET 816061'
 'VRSC 0'
+'HUSH3 0'
 'WLC 210000000'
 'ZILLA 11000000'
-'ZEX 0'
+'ZEXO 0'
+'K64 0'
+
 )
 utxoamt=0.00010000
 ntrzdamt=-0.00083600
@@ -210,10 +207,6 @@ outputstats ()
             GIN)
                 coinsutxoamount=$utxoamt
                 coinsntraddr=Gftmt8hgzgNu6f1o85HMPuwTVBMSV2TYSt
-                ;;
-            HUSH)
-                coinsutxoamount=$utxoamt
-                coinsntraddr=t1fvTULnsz9ZCcpmQ8ZSN6xhUpfkgEuqeNX
                 ;;
             EMC2)
                 coinsutxoamount=0.00100000
