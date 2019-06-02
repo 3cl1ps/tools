@@ -10,4 +10,5 @@ bitcoind -deprecatedrpc=estimatefee &
 sleep 10
 cd /home/eclips/komodo/src
 ./assetchains
+monit start all
 cd ~
