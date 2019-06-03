@@ -65,6 +65,17 @@ if (( diff1 < variance * -1 )) || (( diff1 > variance )); then
 fi
 printf "$thisformat" "GAME" "$blocks" " " "$remoteblocks"
 
+#GAME
+blocks=$(einsteinium-cli getinfo | jq .blocks)
+remoteblocks=$(echo $remotecheck | jq '.[] | select(.ac_name=="GAME") | .blocks')
+diff1=$((blocks-remoteblocks))
+thisformat=$format
+if (( diff1 < variance * -1 )) || (( diff1 > variance )); then
+    forked=true
+    thisformat=$redformat
+fi
+printf "$thisformat" "EMC2" "$blocks" " " "$remoteblocks"
+
 for coins in "${coinlist[@]}"; do
     coin=($coins)
     
