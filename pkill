@@ -1,4 +1,3 @@
-monit stop all
 cd 
 /home/eclips/komodo/src/komodo-cli stop
 bitcoin-cli stop
