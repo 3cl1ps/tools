@@ -78,7 +78,7 @@ printf "$thisformat" "EMC2" "$blocks" " " "$remoteblocks"
 
 for coins in "${coinlist[@]}"; do
     coin=($coins)
-    echo $(coin[0])
+    echo ${coin[0]}
     
     if [[ ! ${ignoreacs[*]} =~ ${coin[0]} ]]; then
 
