@@ -1,5 +1,4 @@
-coinlist=(
-'AXO 200000000'
+coinlist=('AXO 200000000'
 'BET 999999'
 'BOTS 999999'
 'BTCH 20998641'
