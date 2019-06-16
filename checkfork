@@ -65,9 +65,9 @@ if (( diff1 < variance * -1 )) || (( diff1 > variance )); then
 fi
 printf "$thisformat" "GAME" "$blocks" " " "$remoteblocks"
 
-#GAME
+#EMC2
 blocks=$(einsteinium-cli getinfo | jq .blocks)
-remoteblocks=$(echo $remotecheck | jq '.[] | select(.ac_name=="GAME") | .blocks')
+remoteblocks=$(echo $remotecheck | jq '.[] | select(.ac_name=="EMC2") | .blocks')
 diff1=$((blocks-remoteblocks))
 thisformat=$format
 if (( diff1 < variance * -1 )) || (( diff1 > variance )); then
