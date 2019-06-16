@@ -1,4 +1,3 @@
-coinlist=(
 'REVS'
 'SUPERNET'
 'DEX'
@@ -46,4 +45,3 @@ coinlist=(
 'KOIN'
 'ZEXO'
 'K64'
-)
