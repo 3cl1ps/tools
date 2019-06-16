@@ -142,7 +142,7 @@ do
             RESULT1="$(verus -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
             RESULT2="$(verus -rpcclienttimeout=15 getbalance)"
     fi
-    if [ "$count" -gt "6" ]
+    if [ "$count" -gt "7" ]
     then
             RESULT="$(komodo-cli -rpcclienttimeout=15 -ac_name=${processlist[count]} listunspent | grep .00010000 | wc -l)"
             RESULT1="$(komodo-cli -ac_name=${processlist[count]} -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
