@@ -34,6 +34,7 @@ processlist=(
 'gamecredits'
 'einsteinium'
 'gincoin'
+'verusd'
 'REVS'
 'SUPERNET'
 'DEX'
@@ -63,7 +64,6 @@ processlist=(
 'EQL'
 'ZILLA'
 'RFOX'
-'VRSC'
 'SEC'
 'CCL'
 'PIRATE'
@@ -135,6 +135,12 @@ do
             RESULT="$(gincoin-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
             RESULT1="$(gincoin-cli -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
             RESULT2="$(gincoin-cli -rpcclienttimeout=15 getbalance)"
+    fi
+    if [ "$count" = "7" ]
+    then
+            RESULT="$(verus -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
+            RESULT1="$(verus -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+            RESULT2="$(verus -rpcclienttimeout=15 getbalance)"
     fi
     if [ "$count" -gt "6" ]
     then
