@@ -1,3 +1,4 @@
+coinlist=(
 'REVS'
 'SUPERNET'
 'DEX'
@@ -45,3 +46,4 @@
 'KOIN'
 'ZEXO'
 'K64'
+)
