@@ -100,8 +100,6 @@ def get_coin_rpc(coin, config):
             coin_config_file = str(ac_dir + '/einsteinium.conf')
         elif coin == 'CHIPS':
             coin_config_file = str(ac_dir + '/chips.conf')
-        elif coin == 'VRSC':
-            oin_config_file = str(ac_dir + '/' + coin + '/' + coin + '.conf')
         else:
             coin_config_file = str(ac_dir + '/' + coin + '/' + coin + '.conf')
     except:
