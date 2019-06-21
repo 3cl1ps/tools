@@ -79,7 +79,7 @@ processlist=(
 'KOIN'
 'ZEXO'
 'K64'
-'COQUIHASH'
+'COQUICASH'
 )
 
 count=0
