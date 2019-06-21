@@ -153,7 +153,7 @@ coinlist=(
 'ZILLA 11000000'
 'ZEXO 0'
 'K64 0'
-
+'COQUIHASH 0'
 )
 utxoamt=0.00010000
 ntrzdamt=-0.00083600
