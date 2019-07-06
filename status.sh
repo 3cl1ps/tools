@@ -177,11 +177,11 @@ do
     if [[ $RESULT2 == ?([-+])+([0-9])?(.*([0-9])) ]] ||
        [[ $RESULT2 == ?(?([-+])*([0-9])).+([0-9]) ]]
     then
-    if (( $(echo "$RESULT2 > 0.1" | bc -l) ));
+    if (( $(echo "$RESULT2 > 1" | bc -l) ));
     then
     printf  " - Avail Funds: ${GREEN}$RESULT2\t${NC}\n"
 
-    else  if (( $(echo "$RESULT2 > 1" | bc -l) ));
+    else  if (( $(echo "$RESULT2 > 0.1" | bc -l) ));
       then
       printf  " - Avail Funds: ${YELLOW}$RESULT2\t${NC}\n"
       else
