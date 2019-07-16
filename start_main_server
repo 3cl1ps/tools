@@ -1,11 +1,6 @@
 bitcoind -deprecatedrpc=estimatefee &
-/home/eclips/game/src/gamecreditsd -pubkey=$PUBKEY &
-/home/eclips/chips3/src/chipsd -pubkey=$PUBKEY &
 /home/eclips/komodo/src/komodod -gen -genproclimit=1 -notary -pubkey=$PUBKEY &
 /home/eclips/hush3/src/hushd -pubkey=$PUBKEY &
-/home/eclips/einsteinium/src/einsteiniumd -pubkey=$PUBKEY &
-/home/eclips/gincoin/src/gincoind -pubkey=$PUBKEY &
-/home/eclips/VerusCoin/src/verusd -pubkey=$PUBKEY &
 
 sleep 10
 cd /home/eclips/komodo/src
