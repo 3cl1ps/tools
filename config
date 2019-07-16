@@ -1,0 +1,62 @@
+#!/bin/bash
+#
+# Usage:
+# cp config.example config
+#
+# Fill in your nn_address and nn_pubkey and make any relevant preference or system specific changes
+#
+# @author webworker01
+#
+
+#Full path to komodo-cli
+komodocli=/usr/local/bin/komodo-cli
+
+#Full path to komodod
+komodod="$HOME/komodo/src/komodod"
+
+#set to 1 if this is the server for third party coins, else leave as 0
+thirdpartycoins=0
+
+#Set iguana port (current 7776 for first party, 7779 for third party)
+iguanaport=7776
+
+#Enter your notary node compressed address (no quotes)
+nn_address=$KMDADDRESS
+
+#Enter your notary node compressed pubkey (no quotes)
+nn_pubkey=$PUBKEY
+
+#Loop stats script every this many seconds
+sleepytime=600
+#Else change to false if you don't want it to loop
+#sleepytime=false
+
+#How many transactions back to scan for notarizations
+txscanamount=777
+
+#Lower threshold for KMD utxos
+kmdutxoqty=50
+
+#Lower threshold for assetchain utxos
+acutxoqty=50
+
+#Lower threshold for BTC utxos
+btcutxoqty=200
+
+#Lower threshold for third party coin utxos
+otherutxoqty=50
+
+#You can modify this list of ACs to exclude or comment out the line to show all
+ignoreacs=('VOTE2018' 'VOTE2019' 'BEER' 'PIZZA')
+
+#Location for cronsplit.log
+cronsplitlogfile=/tmp/cronsplit.log
+
+#Define coins that are sprout
+sproutcoins=('OOT' 'ZILLA')
+
+#Add additional -addnode parameters for coin daemons
+addnodes="-addnode=seed.komodostats.com "
+
+#which notaryid to use as reference node when checking masks (0 to 63)
+referencenode=$REFNODE
