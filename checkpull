@@ -11,7 +11,7 @@ git pull
 printf "\n${GR}>>>>>>> CHECKING IGUANA${NC}\n"
 cd /home/$USER/SuperNET/iguana
 git stash
-git checkout dev
+git checkout beta_season3
 git pull
 
 printf "\n${GR}>>>>>>> CHECKING HUSH3${NC}\n"
