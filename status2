@@ -30,7 +30,6 @@ UP="$(/usr/bin/uptime)"
 processlist=(
 'iguana'
 'komodod'
-'bitcoind'
 'chipsd'
 'gamecredits'
 'einsteinium'
