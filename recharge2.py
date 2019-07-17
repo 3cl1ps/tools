@@ -194,7 +194,7 @@ def main():
             try:
                 iguana_port = config[coin]['iguana_port']
             except:
-                iguana_port = '7776'
+                iguana_port = '7779'
             iguana_url = 'http://' + iguana_ip + ':' + iguana_port
             # calulate how many utxo's needed to reach target
             n_utxos_needed = int(target) - int(n_relevant_utxos)
