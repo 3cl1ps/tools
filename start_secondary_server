@@ -4,8 +4,3 @@
 /home/eclips/einsteinium/src/einsteiniumd -pubkey=$PUBKEY &
 /home/eclips/gincoin/src/gincoind -pubkey=$PUBKEY &
 /home/eclips/VerusCoin/src/verusd -pubkey=$PUBKEY &
-
-sleep 10
-cd /home/eclips/komodo/src
-./assetchains
-cd ~
