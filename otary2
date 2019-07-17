@@ -1,6 +1,5 @@
 cd /home/eclips/SuperNET/iguana
 ./m_notary_build
 ./m_notary_3rdparty "" notary_nosplit &
-cd /home/eclips/komodo/src
 sleep 400
 ./dpowassets_3rdparty
