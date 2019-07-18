@@ -42,7 +42,7 @@ processlist=(
 'MSHARK'
 'BOTS'
 'MGW'
-'COQUI'
+#'COQUI'
 'WLC'
 'KV'
 'CEAL'
@@ -75,7 +75,7 @@ processlist=(
 'KOIN'
 'ZEXO'
 'K64'
-'COQUICASH'
+#'COQUICASH'
 )
 
 count=0
