@@ -36,8 +36,8 @@ def count_unspent(url, rpcauth, amount):
     for i, val in enumerate(response_listunspent['result']):
         if val['amount'] == float(amount):
             counter += 1
-    print("Filtered by utxo size: " + amount)
-    print("Number of relevant utxo's: " + str(counter))
+    #print("Filtered by utxo size: " + amount)
+    #print("Number of relevant utxo's: " + str(counter))
     return(counter)
 
 
@@ -113,7 +113,7 @@ def get_coin_rpc(coin, config):
     # fallback to reading from configuration directory
     except:
         with open(coin_config_file, 'r') as f:
-            print("Reading config file for credentials:", coin_config_file)
+            #print("Reading config file for credentials:", coin_config_file)
             for line in f:
                 l = line.rstrip()
                 if re.search('rpcuser', l):
@@ -128,7 +128,7 @@ def get_coin_rpc(coin, config):
     # fallback to reading from configuration directory
     except:
         with open(coin_config_file, 'r') as f:
-            print("Reading config file for rpc port:", coin_config_file)
+            #print("Reading config file for rpc port:", coin_config_file)
             for line in f:
                 l = line.rstrip()
                 if re.search('rpcport', l):
@@ -150,7 +150,7 @@ def main():
     if len(path) > 1:
         path += '/'
     path += '/recharge.ini'
-    print("Reading configuration from " + path + "\n")
+    #print("Reading configuration from " + path + "\n")
     config.read(path)
     # iterate through list of coins
     for i, coin in enumerate(config):
@@ -183,7 +183,7 @@ def main():
             continue
         else:
             pass
-        print("Threshold: " + threshold)
+        #print("Threshold: " + threshold)
         # if necessary, generate more utxo's
         if int(n_relevant_utxos) <= int(threshold):
             print("Threshold reached! ")
