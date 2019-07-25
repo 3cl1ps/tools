@@ -14,7 +14,7 @@ CYAN="\033[36m"
 WHITE="\033[37m"
 
 function show_walletsize () {
-  if [ "$1" != "KMD" ] && [ "$1" != "BTC" ] then
+  if [ "$1" != "KMD" ] && [ "$1" != "BTC" ]; then
     if [ -f ~/.komodo/$1/wallet.dat ]; then
       SIZE=$(stat ~/.komodo/$1/wallet.dat | grep -Po "\d+" | head -1)
     else
