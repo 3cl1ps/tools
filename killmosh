@@ -1,0 +1,1 @@
+pgrep mosh-server | grep -v $(ps -o ppid --no-headers $$) | xargs kill
