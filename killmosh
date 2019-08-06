@@ -1,1 +1,2 @@
-pgrep mosh-server | grep -v $(ps -o ppid --no-headers $$) | xargs kill
+#pgrep mosh-server | grep -v $(ps -o ppid --no-headers $$) | xargs kill
+who | grep -v 'via mosh' | grep -oP '(?<=mosh \[)(\d+)(?=\])' | xargs kill
