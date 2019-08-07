@@ -74,6 +74,7 @@ processlist=(
 'ZEXO'
 'K64'
 'THC'
+'COQUICASH'
 )
 
 count=0
