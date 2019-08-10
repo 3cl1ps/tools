@@ -42,14 +42,14 @@ else
   split_threshold=$other_split_threshold
 fi
 
-satoshis=10000
+amount="0.00010000"
 if [[ ${coin} = "GAME" ]]; then
-  satoshis=100000
+  amount="0.00001000"
 fi
 if [[ ${coin} = "EMC2" ]]; then
-  satoshis=100000
+  amount="0.00001000"
 fi
-amount=$(calc $satoshis/100000000)
+
 
 unlocked_utxos=$(${cli} listunspent | jq -r '.[].amount' | grep ${amount} | wc -l)
 locked_utxos=$(${cli} listlockunspent | jq -r length)
