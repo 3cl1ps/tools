@@ -11,8 +11,8 @@ source config
 source functions
 
 if [[ -z $1 ]]; then
-    echo "Usage: consolidate <coinname>"
-    exit 0
+    coin="KMD"
+    asset=""
 fi
 
 if [[ $1 != "KMD" ]]; then
