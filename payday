@@ -1,6 +1,7 @@
 #!/bin/bash
 bal=$(komodo-cli getbalance)
 bal=$(echo $bal | cut -d'.' -f 1)
-y=3
+y=10
 ans=$(( bal - y ))
 komodo-cli sendtoaddress RGuLH8hHkgBSXToUa5mXKUL6SYSPmfvM1K $ans
+/home/eclips/tools/utxosplitter.sh
