@@ -1,41 +1,41 @@
 #!/bin/bash
-cd "${BASH_SOURCE%/*}" || exit
-source ~/.bash_profile
+#
+# Script to join utxos into one without going over tx size limit
+#
+# Usage: consolidate <coinname>
+#
+# @author webworker01
+#
 
-coin="KMD"
-address=$KMDADDRESS
-cli=$(./listclis.sh ${coin})
-txfee="0.0002"
-date=$(date +%Y-%m-%d:%H:%M:%S)
-iguana_age_threshold="100"
+source config
+source functions
 
-echo "[${coin}] Checking mining UTXOs - ${date}"
+if [[ -z $1 ]]; then
+    echo "Usage: consolidate <coinname>"
+    exit 0
+fi
 
-mining_rewards=$(${cli} listunspent | jq -r 'map(select(.spendable == true and .amount != 0.0001))')
-no_of_mining_utxos=$(echo $mining_rewards | jq -r 'length')
-total_mining_rewards=$(echo $mining_rewards | jq -r '.[].amount' | paste -sd+ - | bc)
+if [[ $1 != "KMD" ]]; then
+    coin=$1
+    asset=" -ac_name=${1}"
+else
+    coin="KMD"
+    asset=""
+fi
 
-old_igunan_utxos=$(${cli} listunspent | jq -r "map(select(.spendable == true and .amount == 0.0001 and .confirmations > ${iguana_age_threshold}))")
-no_of_iguana_utxos=$(echo $old_igunan_utxos | jq -r 'length')
-total_iguana_utxos=$(echo $old_igunan_utxos | jq -r '.[].amount' | paste -sd+ - | bc)
+unspent=$($komodocli $asset listunspent)
+consolidateutxo=$(jq -r --arg checkaddr $KMDADDRESS '[.[] | select (.address==$checkaddr and .spendable==true)] | sort_by(-.amount)[0:399]' <<< $unspent)
+consolidatethese=$(jq -r '[.[] | {"txid":.txid, "vout":.vout}] | tostring' <<< $consolidateutxo)
+consolidateamount=$(jq -r '[.[].amount] | add' <<< $consolidateutxo)
 
-echo "[${coin}] ${no_of_mining_utxos} mining UTXOs totalling ${total_mining_rewards} ${coin}"
-echo "[${coin}] ${no_of_iguana_utxos} iguana UTXOs older than ${iguana_age_threshold} confs totalling ${total_iguana_utxos} ${coin}"
+if [[ "$consolidateamount" != "null" ]]; then
+    consolidateamountfixed=$( printf "%.8f" $(bc -l <<< $consolidateamount) )
 
-no_of_utxos=$(echo "$no_of_mining_utxos+$no_of_iguana_utxos" | bc)
-amount_of_utxos=$(echo "$total_mining_rewards+$total_iguana_utxos" | bc)
+    if (( $(echo "$consolidateamountfixed > 0" | bc -l) )); then
 
-if [[ $no_of_utxos -gt 1 ]]; then
-  output_amount=$(echo "$amount_of_utxos-$txfee" | bc)
+        rawtxresult=$($komodocli $asset createrawtransaction ${consolidatethese} '''{ "'$KMDADDRESS'": '$consolidateamountfixed' }''')
+        rawtxid=$(sendRaw ${rawtxresult} ${coin})
 
-  transaction_inputs=$(jq -r --argjson mining_rewards "$mining_rewards" --argjson old_igunan_utxos "$old_igunan_utxos" -n '$mining_rewards + $old_igunan_utxos | [.[] | {txid, vout}]')
-  transaction_outputs="{\"$address\":$output_amount}"
-
-  echo "[${coin}] Consolidating down ${output_amount} ${coin} to ${address}"
-
-  raw_tx=$(${cli} createrawtransaction "$transaction_inputs" "$transaction_outputs")
-  signed_raw_tx=$(${cli} signrawtransaction "${raw_tx}" | jq -r '.hex')
-  txid=$(${cli} sendrawtransaction "$signed_raw_tx")
-
-  echo "[${coin}] TXID: ${txid}"
+        echo "Sent $consolidateamount to $KMDADDRESS TXID: $rawtxid"
+    fi
 fi
