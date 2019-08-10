@@ -1,17 +1,25 @@
 #!/bin/bash
-cd "${BASH_SOURCE%/*}" || exit
+#
+# @author webworker01
 
-# Coin we're resetting
-coin=$1
+source /home/eclips/tools/coinlist
+source /home/eclips/tools/config
 
-if [[ -z "${coin}" ]]; then
-  echo "No coin set, can't clean wallet transactions!"
-  exit
+dt=$(date '+%Y-%m-%d %H:%M:%S');
+
+cleanerremoved=$($komodocli cleanwallettransactions | jq -r .removed_transactions)
+if (( cleanerremoved > 0 )); then
+    echo "$dt [cleanwallettransactions] KMD - Removed $cleanerremoved transactions"
+
+if (( thirdpartycoins < 1 )); then
+    for coins in "${coinlist[@]}"; do
+        coin=($coins)
+        if [[ ! ${ignoreacs[*]} =~ ${coin[0]} ]]; then
+            echo ${coin[0]}
+            cleanerremoved=$($komodocli -ac_name=${coin[0]} cleanwallettransactions | jq -r .removed_transactions)
+            if (( cleanerremoved > 0 )); then
+                echo "$dt [cleanwallettransactions] ${coin[0]} - Removed $cleanerremoved transactions"
+            fi
+        fi
+    done
 fi
-
-cli=$(./listclis.sh ${coin})
-
-result=$($cli cleanwallettransactions)
-result_formatted=$(echo $result | jq -r '"Total Transactions: \(.total_transactons) | Remaining Transactions: \(.remaining_transactons) | Removed Transactions: \(.removed_transactions)"')
-
-echo "[$coin] $(date) | $result_formatted"
