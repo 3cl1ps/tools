@@ -9,7 +9,7 @@
 #
 
 #Full path to komodo-cli
-komodocli="$HOME/komodo/src/komodo-cli"
+komodocli=/usr/local/bin/komodo-cli
 
 #Full path to komodod
 komodod="$HOME/komodo/src/komodod"
