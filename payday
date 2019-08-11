@@ -15,7 +15,6 @@ curdir=$(pwd)
 eval $(grep "^rpcuser=" /home/eclips/.komodo/komodo.conf)
 eval $(grep "^rpcpassword=" /home/eclips/.komodo/komodo.conf)
 curlport=7771
-asset=
 
 echo -e 'SendAway Script v0.01alpha (c) '${GREEN}Decker${RESET}, 2018
 echo    '-------------------------------------------'
@@ -63,5 +62,5 @@ echo -e '\n'
 echo -e 'Now you are able to broadcast your signed tx via "sendrawtransaction" or in any Insight Explorer. '${GREEN}'Verify it before broadcast!'${RESET}
 
 # actually send
-#echo "{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", \"method\": \"sendrawtransaction\", \"params\": [\"$signed\"] }" > $curdir/createrawtx.curl
-#curl -s --user $rpcuser:$rpcpassword --data-binary "@$curdir/createrawtx.curl" -H 'content-type: text/plain;' http://127.0.0.1:$curlport/
+echo "{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", \"method\": \"sendrawtransaction\", \"params\": [\"$signed\"] }" > $curdir/createrawtx.curl
+curl -s --user $rpcuser:$rpcpassword --data-binary "@$curdir/createrawtx.curl" -H 'content-type: text/plain;' http://127.0.0.1:$curlport/
