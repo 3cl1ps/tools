@@ -1,7 +1,21 @@
-bitcoind -deprecatedrpc=estimatefee &
-/home/eclips/komodo/src/komodod -gen -genproclimit=1 -notary -pubkey=$PUBKEY &
+#!/bin/bash
+#
+# @author webworker01
+#
+source config
+source paths
 
-sleep 10
-cd /home/eclips/komodo/src
-./assetchains
-cd ~
+if (( thirdpartycoins < 1 )); then
+    bitcoind &
+    $komodod -gen -genproclimit=1 -notary -pubkey=$nn_pubkey $addnodes &
+    ./assetchains
+else
+    $komodod -pubkey=$nn_pubkey $addnodes &
+
+    for coins in "${coinsthird[@]}"; do
+        coin=($coins)
+        echo "Starting ${coin[0]}"
+        eval $(echo coinexec=${coin[2]})
+        $coinexec -pubkey=$nn_pubkey $addnodes &
+    done
+fi
