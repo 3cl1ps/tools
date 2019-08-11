@@ -7,21 +7,11 @@
 # @author webworker01
 #
 
-source config
-source functions
+source /home/eclips/tools/config
+source /home/eclips/tools/functions
 
-if [[ -z $1 ]]; then
-    coin="KMD"
-    asset=""
-fi
-
-if [[ $1 != "KMD" ]]; then
-    coin=$1
-    asset=" -ac_name=${1}"
-else
-    coin="KMD"
-    asset=""
-fi
+coin="KMD"
+asset=""
 
 unspent=$($komodocli $asset listunspent)
 consolidateutxo=$(jq -r --arg checkaddr $KMDADDRESS '[.[] | select (.address==$checkaddr and .spendable==true)] | sort_by(-.amount)[0:399]' <<< $unspent)
