@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 function process_check () {
-  ps_out=`ps -ef | grep $1 | grep -v 'grep' | grep -v $0`
+  ps_out=`ps -ef | grep $1 | grep -v 'grep' | grep -v 'tailf' | grep -v $0`
   result=$(echo $ps_out | grep "$1")
  if [[ "$result" != "" ]];then
     echo "here"
