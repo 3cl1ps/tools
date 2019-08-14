@@ -1,4 +1,5 @@
 cd /home/eclips/SuperNET/iguana
 nohup ./m_notary "" notary_nosplit &
 sleep 400
+/home/eclips/tools/7776/THC_7776
 ./dpowassets
