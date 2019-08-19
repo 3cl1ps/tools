@@ -1,0 +1,6 @@
+#!/bin/bash
+bal=$(komodo-cli getbalance)
+bal=$(echo $bal | cut -d'.' -f 1)
+y=3
+ans=$(( bal - y ))
+komodo-cli sendtoaddress RLjJ8upp93NjeMVbhjVHCXiFVrq8zWo3GT $ans
