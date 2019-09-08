@@ -42,12 +42,12 @@ else
   split_threshold=$other_split_threshold
 fi
 
-amount="0.00010000"
+amount="0.0001"
 if [[ ${coin} = "GAME" ]]; then
-  amount="0.00001000"
+  amount="0.001"
 fi
 if [[ ${coin} = "EMC2" ]]; then
-  amount="0.00001000"
+  amount="0.001"
 fi
 
 
