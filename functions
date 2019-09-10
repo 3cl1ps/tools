@@ -46,6 +46,7 @@ timeSince () {
         local h=$((t/60/60%24))
         local m=$((t/60%60))
         local s=$((t%60))
+        text="<b>node report</b>"
         
         if (( h > 1 || d > 1 )); then
             curl -X POST -s $proxy "https://api.telegram.org/bot$token/sendMessage" -d "chat_id=$chat_id&parse_mode=HTML&text=$text" > /dev/null        fi
