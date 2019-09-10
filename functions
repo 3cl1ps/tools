@@ -34,9 +34,6 @@ sendRaw()
 timeSince () {
     local currentimestamp=$(date +%s)
     local timecompare=$1
-    
-    token=736082262:AAEehJ1CVJ-g2_a9BpCz97PfY6WjFv0OdtM # your telegram bot token
-    chat_id=-372356510 # telegram chat_id to report
 
     if [ ! -z $timecompare ] && [[ $timecompare != "null" ]]
     then
@@ -46,11 +43,6 @@ timeSince () {
         local h=$((t/60/60%24))
         local m=$((t/60%60))
         local s=$((t%60))
-        text="<b>node report</b>"
-        
-        if (( h > 1 || d > 1 )); then
-            curl -X POST -s $proxy "https://api.telegram.org/bot$token/sendMessage" -d "chat_id=$chat_id&parse_mode=HTML&text=$text" > /dev/null
-        fi
         
         if (( d > 0 )); then
             echo -n "${d}D"
