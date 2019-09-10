@@ -48,9 +48,9 @@ timeSince () {
         local s=$((t%60))
         
         if (( h > 1 || d > 1 )); then
-            curl -X POST -s $proxy "https://api.telegram.org/bot$token/sendMessage" -d "chat_id=$chat_id&parse_mode=HTML&text=test" > /dev/null
+            curl -X POST -s $proxy "https://api.telegram.org/bot$token/sendMessage" -d "chat_id=$chat_id&parse_mode=HTML&text=$text" > /dev/null        fi
         fi
-
+        
         if (( d > 0 )); then
             echo -n "${d}D"
         fi
