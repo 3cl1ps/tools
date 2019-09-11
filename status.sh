@@ -35,6 +35,7 @@ processlist=(
 'JUMBLR'
 'BET'
 'CRYPTO'
+'DION'
 'HODL'
 'MSHARK'
 'BOTS'
