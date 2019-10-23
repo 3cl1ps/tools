@@ -72,6 +72,7 @@ processlist=(
 'K64'
 'THC'
 'COQUICASH'
+'COMMOD'
 )
 
 count=0
