@@ -6,7 +6,7 @@ daemon="hushd -pubkey=${PUBKEY}"
 daemon_process_regex="hushd.*\-pubkey"
 cli="hush-cli"
 wallet_file="${HOME}/.hush/wallet.dat"
-nn_address=$HUSHADDRESS
+nn_address=$KMDADDRESS
 
 ./walletreset.sh \
   "${coin}" \
