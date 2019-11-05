@@ -1,7 +1,7 @@
 #!/bin/bash
 cd "${BASH_SOURCE%/*}" || exit
 
-coin="HUSH"
+coin="HUSH3"
 daemon="hushd -pubkey=${PUBKEY}"
 daemon_process_regex="hushd.*\-pubkey"
 cli="hush-cli"
