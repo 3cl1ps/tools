@@ -72,6 +72,7 @@ processlist=(
 'THC'
 'COQUICASH'
 'COMMOD'
+'WLC21'
 )
 
 count=0
