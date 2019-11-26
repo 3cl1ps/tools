@@ -73,6 +73,7 @@ processlist=(
 'COQUICASH'
 'COMMOD'
 'WLC21'
+'DION'
 )
 
 count=0
