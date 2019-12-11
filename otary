@@ -1,5 +1,5 @@
-cd /home/eclips/SuperNET/iguana
-nohup ./m_notary "" notary_nosplit &
+cd /home/eclips/dPoW/iguana
+./m_notary_build && ./m_notary_KMD
 sleep 400
 /home/eclips/tools/7776/THC_7776
 ./dpowassets
