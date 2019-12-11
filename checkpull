@@ -9,7 +9,7 @@ git checkout beta
 git pull
 
 printf "\n${GR}>>>>>>> CHECKING IGUANA${NC}\n"
-cd /home/$USER/SuperNET/iguana
+cd /home/$USER/dPoW/iguana
 git stash
 git checkout master
 git pull
