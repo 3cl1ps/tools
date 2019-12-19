@@ -17,7 +17,7 @@ git pull
 printf "\n${GR}>>>>>>> CHECKING HUSH3${NC}\n"
 cd /home/$USER/hush3
 git stash
-git checkout master
+git checkout hush3
 git pull
 
 printf "\n${GR}>>>>>>> CHECKING NANOMSG${NC}\n"
