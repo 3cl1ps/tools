@@ -3,10 +3,8 @@
 #
 # @author webworker01
 #
-source coinlist
-source config
-source functions
-source paths
+scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source $scriptpath/main
 
 color_red=$'\033[0;31m'
 color_reset=$'\033[0m'
@@ -101,6 +99,8 @@ outputstats ()
     for coins in "${othercoins[@]}"; do
         coin=($coins)
         seasonfilter=$timefilter2
+        #expand coinexec
+        eval $(echo coinexec=${coin[1]})
         case ${coin[0]} in
             BTC)
                 coinsutxoamount=$utxoamt
@@ -115,9 +115,9 @@ outputstats ()
                 coinsutxoamount=$utxoamt
                 coinsntraddr=Gftmt8hgzgNu6f1o85HMPuwTVBMSV2TYSt
                 ;;
-            HUSH)
+            HUSH3)
                 coinsutxoamount=$utxoamt
-                coinsntraddr=t1fvTULnsz9ZCcpmQ8ZSN6xhUpfkgEuqeNX
+                coinsntraddr=$kmdntrzaddr
                 ;;
             EMC2)
                 coinsutxoamount=0.00100000
@@ -128,8 +128,6 @@ outputstats ()
                 coinsntraddr=$kmdntrzaddr
                 ;;
         esac
-        #expand coinexec
-        eval $(echo coinexec=${coin[1]})
         coinstxinfo=$($coinexec listtransactions "" $txscanamount)
         coinslastntrztime=$(echo $coinstxinfo | jq -r --arg address "$coinsntraddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
         coinsntrzd=$(echo $coinstxinfo | jq --arg address "$coinsntraddr" --arg timefilter $seasonfilter '[.[] | select(.time>=($timefilter|tonumber) and .address==$address and .category=="send")] | length')
