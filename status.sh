@@ -4,8 +4,8 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
-printf "Notary Node Status\n"
-printf "==================\n"
+#printf "Notary Node Status\n"
+#printf "==================\n"
 
 function process_check () {
   ps_out=`ps -ef | grep $1 | grep -v 'grep' | grep -v $0`
