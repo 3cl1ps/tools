@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# Common startup for all scripts
+#
+# @author webworker01
+#
+scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+#imports
+source ${scriptpath}/config
+source ${scriptpath}/coinlist
+source ${scriptpath}/paths
+source ${scriptpath}/functions
+
+#defaults
+addnodes=${addnodes:="-addnode=seed.komodostats.com -addnode=seed.webworker.sh"}
+datetime=${datetime:=$(date '+%Y-%m-%d %H:%M:%S')}
+dpowseeds=${dpowseeds:=('95.213.238.100' '77.75.121.138' '103.6.12.105' '139.99.209.214')}
