@@ -17,7 +17,7 @@ git pull
 printf "\n${GR}>>>>>>> CHECKING HUSH3${NC}\n"
 cd /home/$USER/hush3
 git stash
-git checkout hush3
+git checkout cc35198f1da23a617caf95ed087033d8dfb8ce89
 git pull
 
 printf "\n${GR}>>>>>>> CHECKING VERUS${NC}\n"
