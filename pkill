@@ -1,6 +1,7 @@
 /home/eclips/komodo/src/komodo-cli stop
 bitcoin-cli stop
 /home/eclips/hush3/src/hush-cli stop
+/home/eclips/verus-cli/verus-cli stop
 sleep 10
 pkill -f komodod
 pkill -f bitcoind
