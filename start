@@ -1,6 +1,7 @@
 bitcoind -deprecatedrpc=estimatefee &
 /home/eclips/komodo/src/komodod -gen -genproclimit=1 -notary -pubkey=$PUBKEY &
 /home/eclips/hush3/src/hushd -pubkey=$PUBKEY &
+/home/eclips/verus-cli/verusd -pubkey=$PUBKEY
 
 sleep 10
 cd /home/eclips/komodo/src
