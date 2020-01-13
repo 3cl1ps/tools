@@ -3,33 +3,12 @@ GR='\033[0;32m'
 NC='\033[0m'
 
 printf "\n${GR}>>> CHECKING KOMODO${NC}\n"
-cd /home/$USER/komodo/src
-git stash
-git checkout master
-git pull
-
-printf "\n${GR}>>>>>>> CHECKING IGUANA${NC}\n"
-cd /home/$USER/dPoW/iguana
-git stash
-git checkout master
-git pull
+cd /home/eclips/komodo && git checkout master && git pull && make -j8 || git clean -fdx && cp ../SuperNET/iguana/pubkey.txt src/ && ./zcutil/build.sh -j8
 
 printf "\n${GR}>>>>>>> CHECKING HUSH3${NC}\n"
-cd /home/$USER/hush3
-git stash
-git checkout cc35198f1da23a617caf95ed087033d8dfb8ce89
-git pull
+cd /home/eclips/hush3 && git checkout cc35198f1da23a617caf95ed087033d8dfb8ce89 && git pull && make -j8
 
 printf "\n${GR}>>>>>>> CHECKING VERUS${NC}\n"
-cd /home/$USER/VerusCoin
-git stash
-git checkout master
-git pull
-
-printf "\n${GR}>>>>>>> CHECKING NANOMSG${NC}\n"
-cd /home/$USER/nanomsg
-git stash
-git checkout master
-git pull
+cd /home/eclips/VerusCoin && git checkout master && git pull && make -j8 || ./zcutil/build.sh -j8
 
 printf "\n"
