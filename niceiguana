@@ -1,6 +1,0 @@
-
-#!/bin/bash
-IGUANAPID=$(ps -al | grep iguana | awk '{print $4}')
-echo "sudo renice -20 -p ${IGUANAPID}"
-
-ps -al | grep iguana
