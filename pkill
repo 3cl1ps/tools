@@ -1,3 +1,4 @@
+pkill -f iguana
 /home/eclips/komodo/src/komodo-cli stop
 bitcoin-cli stop
 /home/eclips/hush3/src/hush-cli stop
@@ -5,5 +6,4 @@ bitcoin-cli stop
 sleep 60
 pkill -f komodod
 pkill -f bitcoind
-pkill -f iguana
 rm /home/eclips/nohup.out
