@@ -5,6 +5,6 @@ if [[ -z $1 ]]; then
 fi
 
 ./listassetchains | while read coin; do
-  echo $coin
+  #echo $coin
   komodo-cli -ac_name=$coin "${@}"
 done
