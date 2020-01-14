@@ -5,5 +5,5 @@ bitcoin-cli stop
 sleep 60
 pkill -f komodod
 pkill -f bitcoind
-pkiil -f iguana
+pkill -f iguana
 rm /home/eclips/nohup.out
