@@ -1,0 +1,17 @@
+#update
+/home/eclips/tools/checkpull
+#kill
+/home/eclips/tools/pkill
+#start
+/home/eclips/tools/start
+#wait
+started=0
+while [[ ${started} -eq 0 ]]; do
+  komodo-cli -ac_name=VRSC getbalance > /dev/null 2>&1
+  outcome=$(echo $?)
+  if [[ ${outcome} -eq 0 ]]; then
+    started=1
+  fi
+done
+#iguana
+/home/eclips/tools/otary
