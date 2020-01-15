@@ -1,3 +1,4 @@
+#!/bin/bash
 #update
 /home/eclips/tools/checkpull
 #kill
