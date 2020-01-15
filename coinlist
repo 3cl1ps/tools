@@ -1,2 +1,2 @@
 #!/bin/bash
-coinlist=./listassetchains
+coinlist="$(./listassetchains)"
