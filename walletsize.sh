@@ -17,22 +17,17 @@ function show_walletsize () {
   if [ "$1" != "KMD" ] && [ "$1" != "BTC" ]; then
     if [ -f ~/.komodo/$1/wallet.dat ]; then
       SIZE=$(stat ~/.komodo/$1/wallet.dat | grep -Po "\d+" | head -1)
+      if [ "$SIZE" -gt "4222944" ]; then
+        /home/eclips/tools/walletresetac.sh $1
+      fi
     else
       SIZE=0
     fi
-  elif [ "$1" = "BTC" ]; then
-    SIZE=$(stat /bitcoin/wallet.dat | grep -Po "\d+" | head -1)
   elif [ "$1" = "KMD" ]; then
     SIZE=$(stat ~/.komodo/wallet.dat | grep -Po "\d+" | head -1)
-  fi
-
-  OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
-
-  if [ "$SIZE" -gt "4222944" ]; then
-    OUTSTR=${RED}$OUTSTR${RESET}
-    printf "[%8s] %16b\n" $1 $OUTSTR
-  else
-    OUTSTR=${GREEN}$OUTSTR${RESET}
+    if [ "$SIZE" -gt "4222944" ]; then
+      /home/eclips/tools/walletresetkmd.sh
+    fi
   fi
 }
 
@@ -44,7 +39,7 @@ ignore_list=(
 )
 
 show_walletsize KMD
-show_walletsize BTC
+#show_walletsize BTC
 
 # Only assetchains
 ${HOME}/komodo/src/listassetchains | while read list; do
