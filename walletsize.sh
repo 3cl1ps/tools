@@ -36,6 +36,8 @@ ignore_list=(
   VOTE2019
   PIZZA
   BEER
+  VRSC
+  PIRATE
 )
 
 show_walletsize KMD
