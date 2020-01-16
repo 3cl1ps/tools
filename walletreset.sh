@@ -61,7 +61,12 @@ echo "[${coin}] UTXOs unlocked"
 
 echo "[${coin}] Sending entire balance to the temp adress"
 txid=$(${cli} sendtoaddress ${temp_address} $(${cli} getbalance) "" "" true)
-echo "[${coin}] Balance sent TXID: ${txid}"
+if [ ${#txid} -eq 64 ]
+then
+  echo "[${coin}] Balance sent TXID: ${txid}"
+else 
+  exit 
+fi
 
 echo "[${coin}] Waiting for confirmation of sent funds"
 waitforconfirm ${txid}
