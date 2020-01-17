@@ -16,7 +16,7 @@ if (( thirdpartycoins < 1 )); then
     for coins in "${coinlist[@]}"; do
         coin=($coins)
         if [[ ! ${ignoreacs[*]} =~ ${coin[0]} ]]; then
-            #echo ${coin[0]}
+            echo ${coin[0]}
             cleanerremoved=$($komodocli -ac_name=${coin[0]} cleanwallettransactions | jq -r .removed_transactions)
             if (( cleanerremoved > 0 )); then
                 echo "$dt [cleanwallettransactions] ${coin[0]} - Removed $cleanerremoved transactions"
