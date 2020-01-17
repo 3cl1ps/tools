@@ -51,7 +51,7 @@ btcutxoqty=200
 otherutxoqty=50
 
 #You can modify this list of ACs to exclude or comment out the line to show all
-ignoreacs=('VOTE2018' 'VOTE2019' 'BEER' 'PIZZA')
+ignoreacs=('VOTE2018' 'VOTE2019' 'BEER' 'PIZZA' 'VRSC')
 
 #Location for cronsplit.log
 cronsplitlogfile=/tmp/cronsplit.log
