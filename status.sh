@@ -152,12 +152,17 @@ then
     then
         if (( $(echo "$RESULT2 > 0.1" | bc -l) ));
         then
-            printf  " - Funds: ${GREEN}$RESULT2\t${NC}"
+            printf  " - Funds: ${GREEN}$RESULT2${NC}"
         else
-            printf  " - Funds: ${RED}$RESULT2\t${NC}"
+            printf  " - Funds: ${RED}$RESULT2${NC}"
         fi
+    fi
+    size=${#RESULT2}
+    if [ "$size" -gt "13" ]
+    then
+        echo -n -e ""
     else
-        printf "\n"
+        echo -n -e "\t"
     fi
 
     OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
