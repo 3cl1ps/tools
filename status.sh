@@ -47,7 +47,14 @@ do
             RESULT="$(bitcoin-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
             RESULT1="$(bitcoin-cli -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
             RESULT2="$(bitcoin-cli -rpcclienttimeout=15 getbalance)"
-            SIZE=$(stat /home/eclips/.bitcoin/wallet.dat | grep -Po "\d+" | head -1)
+            if [ -e /home/eclips/.bitcoin/wallet.dat ]
+            then
+                SIZE=$(stat /home/eclips/.bitcoin/wallet.dat | grep -Po "\d+" | head -1)
+            fi
+            if [ -e /bitcoin/wallet.dat ]
+            then
+                SIZE=$(stat /bitcoin/wallet.dat | grep -Po "\d+" | head -1)
+            fi
         fi
         # Check if we have actual results next two lines check for valid number.
         if [[ $RESULT == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT == ?(?([-+])*([0-9])).+([0-9]) ]]
