@@ -13,7 +13,7 @@ processlist=(
 )
 
 echo -n -e "iguana \t\t"
-if ps aux | grep -v grep | grep ${processlist[count]} >/dev/null
+if ps aux | grep -v grep | grep iguana >/dev/null
 then 
     printf "${GREEN} Running ${NC}\n"
 else
