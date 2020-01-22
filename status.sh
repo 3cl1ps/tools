@@ -158,7 +158,7 @@ then
         fi
     fi
     size=${#RESULT2}
-    if [ "$size" -gt "13" ]
+    if [ "$size" -gt "12" ]
     then
         echo -n -e ""
     else
