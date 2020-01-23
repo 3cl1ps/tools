@@ -1,5 +1,40 @@
 #!/bin/bash
 # Suggest using with this command: watch --color -n 60 ./status
+scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source $scriptpath/main
+
+checkRepo () {
+    if [ -z $1 ] || [ -z $2 ] || [ -z $3 ]; then
+        return
+    fi
+
+    prevdir=${PWD}
+
+    #eval cd "$2"
+    cd $2
+
+    git remote update > /dev/null 2>&1
+
+    localrev=$(git rev-parse HEAD)
+    remoterev=$(git rev-parse $3)
+    cd $prevdir
+
+    if [ $localrev != $remoterev ]; then
+        printf "$color_red[U]$color_reset"
+    fi
+
+    case $1 in
+        KMD|GIN)
+            printf "     "
+            ;;
+        CHIPS)
+            printf "   "
+            ;;
+        GAME|EMC2)
+            printf "    "
+            ;;
+    esac
+}
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -24,6 +59,8 @@ count=0
 while [ "x${processlist[count]}" != "x" ]
 do
     echo -n "${processlist[count]}"
+    repo=(${repos[KMD]})
+    echo -n "$(checkRepo KMD ${repo[0]} ${repo[1]})"
     #fixes formating issues
     size=${#processlist[count]}
     if [ "$size" -lt "8" ]
