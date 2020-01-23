@@ -40,7 +40,7 @@ do
             RESULT="$(komodo-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
             RESULT1="$(komodo-cli -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
             RESULT2="$(komodo-cli -rpcclienttimeout=15 getbalance)"
-            SIZE=$(stat /home/eclips/.komodo/wallet.dat | grep -Po "\d+" | head -1)
+            SIZE=$(stat --printf="%s" /home/eclips/.komodo/wallet.dat)
         fi
         if [ "$count" = "1" ]
         then
@@ -49,11 +49,11 @@ do
             RESULT2="$(bitcoin-cli -rpcclienttimeout=15 getbalance)"
             if [ -e /home/eclips/.bitcoin/wallet.dat ]
             then
-                SIZE=$(stat /home/eclips/.bitcoin/wallet.dat | grep -Po "\d+" | head -1)
+                SIZE=$(stat --printf="%s" /home/eclips/.bitcoin/wallet.dat)
             fi
             if [ -e /bitcoin/wallet.dat ]
             then
-                SIZE=$(stat /bitcoin/wallet.dat | grep -Po "\d+" | head -1)
+                SIZE=$(stat --printf="%s" /bitcoin/wallet.dat)
             fi
         fi
         # Check if we have actual results next two lines check for valid number.
@@ -126,7 +126,7 @@ then
     RESULT="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} listunspent | grep .00010000 | wc -l)"
     RESULT1="$(komodo-cli -ac_name=${list} -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
     RESULT2="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} getbalance)"
-    SIZE=$(stat ~/.komodo/${list}/wallet.dat | grep -Po "\d+" | head -1)
+    SIZE=$(stat --printf="%s" ~/.komodo/${list}/wallet.dat)
     # Check if we have actual results next two lines check for valid number.
     if [[ $RESULT == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT == ?(?([-+])*([0-9])).+([0-9]) ]]
     then
