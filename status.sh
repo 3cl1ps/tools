@@ -122,7 +122,7 @@ do
             printf " - WSize: ${GREEN}%5s${NC}" $OUTSTR
         fi
         
-        if [[ "$TIME" > "0.1" ]]; then
+        if [[ "$TIME" > "0.05" ]]; then
             printf " - Time: ${RED}%3ss${NC}" $TIME          
         else
             printf " - Time: ${GREEN}%3ss${NC}" $TIME
@@ -202,7 +202,7 @@ then
         printf " - WSize: ${GREEN}%5s${NC}" $OUTSTR
     fi
 
-    if [[ "$TIME" > "0.1" ]]; then
+    if [[ "$TIME" > "0.05" ]]; then
         printf " - Time: ${RED}%5ss${NC}" $TIME          
     else
         printf " - Time: ${GREEN}%5ss${NC}" $TIME
