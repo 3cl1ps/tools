@@ -11,19 +11,18 @@ btcntrzaddr=1P3rU1Nk1pmc2BiWC8dEy9bZa1ZbMp5jfg
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 
 checkRepo () {
-    if [ -z $1 ] || [ -z $2 ] || [ -z $3 ]; then
+    if [ -z $1 ] ; then
         return
     fi
-
+    repo=(${repos[$1]})
     prevdir=${PWD}
 
-    #eval cd "$2"
-    cd $2
+    cd $repo
 
     git remote update > /dev/null 2>&1
 
     localrev=$(git rev-parse HEAD)
-    remoterev=$(git rev-parse $3)
+    remoterev=$(git rev-parse ${repo[1]})
     cd $prevdir
 
     if [ $localrev != $remoterev ]; then
@@ -31,20 +30,19 @@ checkRepo () {
     fi
 }
 
+printf "%-9s" "iguana"
+if ps aux | grep -v grep | grep iguana >/dev/null
+then 
+    printf "${GREEN} Running $(checkRepo dPoW)${NC}\n"
+else
+    printf "${RED} Not Running $(checkRepo dPoW)${NC}\n"
+fi
+
 
 processlist=(
-#'iguana'
 'komodod'
 'bitcoind'
 )
-
-printf "%-13s" "iguana" 
-if ps aux | grep -v grep | grep iguana >/dev/null
-then 
-    printf "${GREEN} Running ${NC}\n"
-else
-    printf "${RED} Not Running ${NC}\n"
-fi
 
 count=0
 while [ "x${processlist[count]}" != "x" ]
