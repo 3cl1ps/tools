@@ -2,6 +2,7 @@
 # Find out the size of KMD and other KMD assetchains
 
 # Credits decker, jeezy
+source /home/eclips/.bash_profile
 
 RESET="\033[0m"
 BLACK="\033[30m"
