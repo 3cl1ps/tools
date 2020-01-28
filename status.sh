@@ -42,6 +42,7 @@ fi
 processlist=(
 'komodod'
 'bitcoind'
+'verusd'
 )
 
 count=0
@@ -79,6 +80,16 @@ do
                 SIZE=$(stat --printf="%s" /bitcoin/wallet.dat)
             fi
             TIME=$((time bitcoin-cli listunspent) 2>&1 >/dev/null)
+        fi
+        if [ "$count" = "2" ]
+        then
+            RESULT="$(verus -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
+            RESULT1="$(verus -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+            RESULT2="$(verus -rpcclienttimeout=15 getbalance)"
+            SIZE=$(stat --printf="%s" /home/eclips/.komodo/VRSC/wallet.dat)
+            TIME=$((time verus listunspent) 2>&1 >/dev/null)
+            txinfo=$(verus listtransactions "" $txscanamount)
+            lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"') 
         fi
         # Check if we have actual results next two lines check for valid number.
         if [[ $RESULT == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT == ?(?([-+])*([0-9])).+([0-9]) ]]
