@@ -33,9 +33,9 @@ checkRepo () {
 printf "%-9s %3s" "iguana" $(checkRepo dPoW)
 if ps aux | grep -v grep | grep iguana >/dev/null
 then 
-    printf "${GREEN} Running $(checkRepo dPoW)${NC}\n"
+    printf "${GREEN} Running${NC}\n"
 else
-    printf "${RED} Not Running $(checkRepo dPoW)${NC}\n"
+    printf "${RED} Not Running${NC}\n"
 fi
 
 
