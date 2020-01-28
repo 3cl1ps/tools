@@ -94,7 +94,7 @@ do
         # Check if we have actual results next two lines check for valid number.
         if [[ $RESULT == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT == ?(?([-+])*([0-9])).+([0-9]) ]]
         then
-            if [ "$RESULT" -lt "15" ]
+            if [[ "$RESULT" -lt "15" ]] || [[ "$RESULT" -gt "50" ]]
             then
                 printf  " - UTXOs: ${RED}%3s${NC}" $RESULT
             else
@@ -177,7 +177,7 @@ then
     # Check if we have actual results next two lines check for valid number.
     if [[ $RESULT == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT == ?(?([-+])*([0-9])).+([0-9]) ]]
     then
-        if [ "$RESULT" -lt "30" ]
+        if [[ "$RESULT" -lt "30" ]] || [[ "$RESULT" -gt "110" ]]
         then
             printf  " - UTXOs: ${RED}%3s${NC}" $RESULT
         else
