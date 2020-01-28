@@ -118,7 +118,7 @@ do
             then
                 printf " - Funds: ${GREEN}%10.2f${NC}" $RESULT2
             else
-                printf " - Funds: ${RED}%102f${NC}" $RESULT2
+                printf " - Funds: ${RED}%10.2f${NC}" $RESULT2
             fi
         else
             printf "\n"
