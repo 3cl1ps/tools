@@ -91,26 +91,26 @@ outputRow()
 
 
 if [[ $coin == "KMD" ]]; then
-    blocks=$($komodocli getinfo | jq .blocks) 
-    longest=$($komodocli getinfo | jq .longestchain) 
-    blockhash=$($komodocli getbestblockhash) 
+    blocks=$(komodo-cli getinfo | jq .blocks) 
+    longest=$(komodo-cli getinfo | jq .longestchain) 
+    blockhash=$(komodo-cli getbestblockhash) 
     parseKomodostats "KMD" "$remotecheck" 
     parseDexstats "KMD" "$remotecheck2" 
     if (( blocks >= remoteblocks2 )); then 
-        hashatheight2=$($komodocli getblockhash $remoteblocks2) 
+        hashatheight2=$(komodo-cli getblockhash $remoteblocks2) 
     else 
         hashatheight2= 
     fi 
 
     outputRow "KMD" $blocks $longest $blockhash 
 else 
-    blocks=$($komodocli -ac_name=${coin} getinfo | jq .blocks) 
-    longest=$($komodocli -ac_name=${coin} getinfo | jq .longestchain) 
-    blockhash=$($komodocli -ac_name=${coin} getbestblockhash) 
+    blocks=$(komodo-cli -ac_name=${coin} getinfo | jq .blocks) 
+    longest=$(komodo-cli -ac_name=${coin} getinfo | jq .longestchain) 
+    blockhash=$(komodo-cli -ac_name=${coin} getbestblockhash) 
     parseKomodostats "${coin}" "$remotecheck" 
     parseDexstats "${coin}" "$remotecheck2" 
     if [[ ! -z $remoteblocks2 ]] && (( blocks >= remoteblocks2 )); then 
-        hashatheight2=$($komodocli -ac_name=${coin} getblockhash $remoteblocks2) 
+        hashatheight2=$(komodo-cli -ac_name=${coin} getblockhash $remoteblocks2) 
     else 
         hashatheight2= 
     fi 
