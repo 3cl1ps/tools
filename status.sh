@@ -30,7 +30,7 @@ checkRepo () {
     fi
 }
 
-printf "%-9s" "iguana"
+printf "%-9s %3s" "iguana" $(checkRepo dPoW)
 if ps aux | grep -v grep | grep iguana >/dev/null
 then 
     printf "${GREEN} Running $(checkRepo dPoW)${NC}\n"
@@ -48,7 +48,7 @@ count=0
 while [ "x${processlist[count]}" != "x" ]
 do
     repo=(${repos[KMD]})
-    printf "%-9s %3s" ${processlist[count]} $(checkRepo KMD ${repo[0]} ${repo[1]})
+    printf "%-9s %3s" ${processlist[count]} $(checkRepo KMD)
     if ps aux | grep -v grep | grep ${processlist[count]} >/dev/null
     then
         printf "${GREEN} Running ${NC}"
@@ -69,7 +69,7 @@ do
             RESULT2="$(bitcoin-cli -rpcclienttimeout=15 getbalance)"
             txinfo=$(bitcoin-cli listtransactions "" $txscanamount)
             lastntrztime=$(echo $txinfo | jq -r --arg address "$btcntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
-            
+
             if [ -e /home/eclips/.bitcoin/wallet.dat ]
             then
                 SIZE=$(stat --printf="%s" /home/eclips/.bitcoin/wallet.dat)
@@ -119,7 +119,7 @@ do
         else
             printf " - WSize: ${GREEN}%5s${NC}" $OUTSTR
         fi
-        
+
         if [[ "$TIME" > "0.05" ]]; then
             printf " - Time: ${RED}%3ss${NC}" $TIME          
         else
@@ -131,6 +131,7 @@ do
         #else
         printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
         #fi
+
 
         printf "\n"
         RESULT=""
@@ -161,7 +162,7 @@ then
     SIZE=$(stat --printf="%s" ~/.komodo/${list}/wallet.dat)
     TIME=$((time komodo-cli -ac_name=${list} listunspent) 2>&1 >/dev/null)
     txinfo=$(komodo-cli -ac_name=${list} listtransactions "" $txscanamount)
-    lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"') 
+    lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
     # Check if we have actual results next two lines check for valid number.
     if [[ $RESULT == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT == ?(?([-+])*([0-9])).+([0-9]) ]]
     then
@@ -207,6 +208,10 @@ then
     fi
 
     printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
+
+    if [[ "$(/home/eclips/tools/checkfork2.sh ${list})" == "1" ]]; then
+        printf " ${RED}Fork!${NC}" 
+    fi
 
     printf "\n"
     RESULT=""

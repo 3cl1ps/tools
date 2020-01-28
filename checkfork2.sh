@@ -1,17 +1,21 @@
 # 
 # @author webworker01 
 # 
-scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" 
-source $scriptpath/main 
+#scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" 
+#source /home/eclips/tools/main 
 
 #how far ahead or behind before being marked as a fork 
 variance=20 
 coin=$1 
 
-remotecheck=$(curl -Ssf https://komodostats.com/api/notary/summary.json) 
-remotecheck2=$(curl -Ssf https://dexstats.info/api/explorerstatus.php) 
-
-
+remotecheck=$(curl -Ssf https://komodostats.com/api/notary/summary.json >/dev/null 2>&1) 
+if [ $? -ne 0 ]; then
+    exit 2 
+fi
+remotecheck2=$(curl -Ssf https://dexstats.info/api/explorerstatus.php >/dev/null 2>&1)
+if [ $? -ne 0 ]; then
+    exit 2
+fi
 
 parseKomodostats()
 {
@@ -63,58 +67,35 @@ outputRow()
         fi  
 
         if ((localblocks < locallongest)); then
-            #forked=true
-            #thisformat=$redformat
-            echo KO
             return 1
         fi
         if (( diff1 < variance * -1 )) || (( diff1 > variance )); then
-            #forked=true
-            #thisformat=$redformat
-            echo KO
             return 1
         fi
         if (( diff2 < variance * -1 )) || (( diff2 > variance )); then
-            #forked=true
-            #thisformat=$redformat
-            echo KO
             return 1
         fi
         if (( diff3 < variance * -1 )) || (( diff3 > variance )); then
-            #forked=true
-            #thisformat=$redformat
-            echo KO
             return 1
         fi
 
         hasherror2=""
         if [[ ! -z $remotehash2 ]] && [[ -z $hashatheight2 ]]; then
-            #forked=true
-            #hasherror2="!! "
-            #echo "Dexstats Remote Chain Longer! Hash Mismatch 1 Local: $blocks Remote: $remoteblocks2"
-            echo KO
             return 1
         elif [[ -z $remotehash2 ]] && [[ "$hashatheight2" != "$remotehash2" ]]; then
-            #forked=true
-            #hasherror2="!! "
-            #echo "Dexstats Hash Mismatch Local: $hashatheight2 Remote: $remotehash2"
-            echo KO
             return 1
         fi
     fi
-    echo OK
     return 0
 }
 
 
 if [[ $coin == "KMD" ]]; then
-    echo KMD
     blocks=$($komodocli getinfo | jq .blocks) 
     longest=$($komodocli getinfo | jq .longestchain) 
     blockhash=$($komodocli getbestblockhash) 
     parseKomodostats "KMD" "$remotecheck" 
     parseDexstats "KMD" "$remotecheck2" 
-    #parseNotarystats "KMD" "$remotecheck3" 
     if (( blocks >= remoteblocks2 )); then 
         hashatheight2=$($komodocli getblockhash $remoteblocks2) 
     else 
@@ -123,7 +104,6 @@ if [[ $coin == "KMD" ]]; then
 
     outputRow "KMD" $blocks $longest $blockhash 
 else 
-    echo autre
     blocks=$($komodocli -ac_name=${coin} getinfo | jq .blocks) 
     longest=$($komodocli -ac_name=${coin} getinfo | jq .longestchain) 
     blockhash=$($komodocli -ac_name=${coin} getbestblockhash) 
