@@ -38,6 +38,7 @@ ignore_list=(
   PIZZA
   BEER
   PIRATE
+  VRSC
 )
 
 show_walletsize KMD
