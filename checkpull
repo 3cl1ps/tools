@@ -4,7 +4,7 @@ NC='\033[0m'
 
 repo=(${repos[KMD]})
 printf "\n${GR}>>> CHECKING KOMODO${NC}\n"
-cd /home/eclips/komodo && git checkout ${repo[1]} && git pull && make -j8 || git clean -fdx && cp ../dPoW/iguana/pubkey.txt src/ && ./zcutil/build.sh -j8
+cd /home/eclips/komodo && git checkout ${repos[KMD,1]} && git pull && make -j8 || git clean -fdx && cp ../dPoW/iguana/pubkey.txt src/ && ./zcutil/build.sh -j8
 
 repo=(${repos[VRSC]})
 printf "\n${GR}>>>>>>> CHECKING VERUS${NC}\n"
