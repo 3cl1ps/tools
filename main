@@ -8,9 +8,22 @@ scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 #imports
 source ${scriptpath}/config
-source ${scriptpath}/coinlist
-source ${scriptpath}/paths
 source ${scriptpath}/functions
+
+coinsfirst=(
+'BTC bitcoin-cli bitcoind ../../bitcoin'
+)
+
+#for git checking - path and remote branch
+declare -A repos=(
+[KMD]="$HOME/komodo origin/master"
+[dPoW]="$HOME/dPoW origin/master"
+[CHIPS]="$HOME/chips3 origin/dev"
+[GAME]="$HOME/GameCredits origin/master"
+[EMC2]="$HOME/einsteinium origin/master"
+[GIN]="$HOME/gincoin-core origin/master"
+[VRSC]="$HOME/VerusCoin origin/master"
+)
 
 #defaults
 addnodes=${addnodes:="-addnode=seed.komodostats.com -addnode=seed.webworker.sh"}
