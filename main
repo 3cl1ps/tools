@@ -8,6 +8,7 @@ scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 #imports
 source ${scriptpath}/functions
+source /home/eclips/install/repos
 source /home/eclips/.bash_profile
 
 #set to 1 if this is the server for third party coins, else leave as 0
@@ -31,17 +32,6 @@ dpowseeds=('95.213.238.100' '77.75.121.138' '103.6.12.105' '139.99.209.214')
 
 coinsfirst=(
 'BTC bitcoin-cli bitcoind ../../bitcoin'
-)
-
-#for git checking - path and remote branch
-declare -A repos=(
-[KMD]="$HOME/komodo origin/master"
-[dPoW]="$HOME/dPoW origin/master"
-[CHIPS]="$HOME/chips3 origin/dev"
-[GAME]="$HOME/GameCredits origin/master"
-[EMC2]="$HOME/einsteinium origin/master"
-[GIN]="$HOME/gincoin-core origin/master"
-[VRSC]="$HOME/VerusCoin origin/master"
 )
 
 #defaults
