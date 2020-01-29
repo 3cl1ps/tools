@@ -7,8 +7,7 @@
 # @author webworker01
 #
 
-source /home/eclips/tools/config
-source /home/eclips/tools/functions
+source /home/eclips/tools/main
 
 coin="KMD"
 asset=""
