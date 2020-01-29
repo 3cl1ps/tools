@@ -3,9 +3,9 @@ GR='\033[0;32m'
 NC='\033[0m'
 
 printf "\n${GR}>>> CHECKING KOMODO${NC}\n"
-cd /home/eclips/komodo && git checkout ${repos[KMD,1]} && git pull && make -j8 || git clean -fdx && cp ../dPoW/iguana/pubkey.txt src/ && ./zcutil/build.sh -j8
+cd ${repos[KMD,0]} && git checkout ${repos[KMD,1]} && git pull && make -j8 || git clean -fdx && cp ../dPoW/iguana/pubkey.txt src/ && ./zcutil/build.sh -j8
 
 printf "\n${GR}>>>>>>> CHECKING VERUS${NC}\n"
-cd /home/eclips/VerusCoin && git checkout ${repos[VRSC,1]} && git pull && make -j8 || ./zcutil/build.sh -j8
+cd ${repos[VRSC,0]} && git checkout ${repos[VRSC,1]} && git pull && make -j8 || ./zcutil/build.sh -j8
 
 printf "\n"
