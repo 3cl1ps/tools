@@ -7,8 +7,27 @@
 scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 #imports
-source ${scriptpath}/config
 source ${scriptpath}/functions
+source /home/eclips/.bash_profile
+
+#set to 1 if this is the server for third party coins, else leave as 0
+thirdpartycoins=0
+iguanaport=7776
+nn_address=$KMDADDRESS
+nn_pubkey=$PUBKEY
+nn_ipaddress=$(hostname -I | sed 's/.$//')
+referencenode=$REFNODE
+#How many transactions back to scan for notarizations
+txscanamount=777
+
+#You can modify this list of ACs to exclude or comment out the line to show all
+ignoreacs=('VOTE2018' 'VOTE2019' 'BEER' 'PIZZA' 'VRSC' 'HUSH3')
+
+#Add additional -addnode parameters for coin daemons
+addnodes="-addnode=seed.komodostats.com -addnode=seed.webworker.sh"
+
+#Configure initial seeds to connect to iguana network
+dpowseeds=('95.213.238.100' '77.75.121.138' '103.6.12.105' '139.99.209.214')
 
 coinsfirst=(
 'BTC bitcoin-cli bitcoind ../../bitcoin'
