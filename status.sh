@@ -158,11 +158,7 @@ do
 done
 
 count=0
-$HOME/komodo/src/listassetchains | while read list; do
-if [[ "${ignoreacs[@]}" =~ "${list}" ]]; then
-    continue
-fi
-
+$HOME/tools/listassetchains | while read list; do
 printf "%-13s" "${list}"
 if ps aux | grep -v grep | grep ${list} >/dev/null
 then
