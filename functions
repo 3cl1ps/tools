@@ -106,3 +106,23 @@ timeSince ()
         fi
     fi
 }
+
+checkRepo () {
+    if [ -z $1 ] ; then
+        return
+    fi
+    repo=(${repos[$1]})
+    prevdir=${PWD}
+
+    cd $repo
+
+    git remote update > /dev/null 2>&1
+
+    localrev=$(git rev-parse HEAD)
+    remoterev=$(git rev-parse ${repo[1]})
+    cd $prevdir
+
+    if [ $localrev != $remoterev ]; then
+        printf "${RED}[U]${NC}"
+    fi
+}
