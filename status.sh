@@ -139,76 +139,78 @@ done
 
 count=0
 $HOME/tools/listassetchains | while read list; do
-printf "%-13s" "${list}"
-if ps aux | grep -v grep | grep ${list} >/dev/null
-then
-    printf "${GREEN} Running ${NC}"
-    RESULT="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} listunspent | grep .00010000 | wc -l)"
-    RESULT1="$(komodo-cli -ac_name=${list} -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
-    RESULT2="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} getbalance)"
-    SIZE=$(stat --printf="%s" ~/.komodo/${list}/wallet.dat)
-    TIME=$((time komodo-cli -ac_name=${list} listunspent) 2>&1 >/dev/null)
-    txinfo=$(komodo-cli -ac_name=${list} listtransactions "" $txscanamount)
-    lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
-    # Check if we have actual results next two lines check for valid number.
-    if [[ $RESULT == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT == ?(?([-+])*([0-9])).+([0-9]) ]]
+if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
+    printf "%-13s" "${list}"
+    if ps aux | grep -v grep | grep ${list} >/dev/null
     then
-        if [[ "$RESULT" -lt "30" ]] || [[ "$RESULT" -gt "110" ]]
+        printf "${GREEN} Running ${NC}"
+        RESULT="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} listunspent | grep .00010000 | wc -l)"
+        RESULT1="$(komodo-cli -ac_name=${list} -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+        RESULT2="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} getbalance)"
+        SIZE=$(stat --printf="%s" ~/.komodo/${list}/wallet.dat)
+        TIME=$((time komodo-cli -ac_name=${list} listunspent) 2>&1 >/dev/null)
+        txinfo=$(komodo-cli -ac_name=${list} listtransactions "" $txscanamount)
+        lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
+        # Check if we have actual results next two lines check for valid number.
+        if [[ $RESULT == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT == ?(?([-+])*([0-9])).+([0-9]) ]]
         then
-            printf  " - UTXOs: ${RED}%3s${NC}" $RESULT
-        else
-            printf  " - UTXOs: ${GREEN}%3s${NC}" $RESULT
+            if [[ "$RESULT" -lt "30" ]] || [[ "$RESULT" -gt "110" ]]
+            then
+                printf  " - UTXOs: ${RED}%3s${NC}" $RESULT
+            else
+                printf  " - UTXOs: ${GREEN}%3s${NC}" $RESULT
+            fi
         fi
-    fi
 
-    if [[ $RESULT1 == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT1 == ?(?([-+])*([0-9])).+([0-9]) ]]
-    then
-        if [ "$RESULT1" -gt "0" ]
+        if [[ $RESULT1 == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT1 == ?(?([-+])*([0-9])).+([0-9]) ]]
         then
-            printf  " - Dust: ${RED}%3s${NC}" $RESULT1
-        else
-            printf  " - Dust: ${GREEN}%3s${NC}" $RESULT1
+            if [ "$RESULT1" -gt "0" ]
+            then
+                printf  " - Dust: ${RED}%3s${NC}" $RESULT1
+            else
+                printf  " - Dust: ${GREEN}%3s${NC}" $RESULT1
+            fi
         fi
-    fi
 
-    if [[ $RESULT2 == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT2 == ?(?([-+])*([0-9])).+([0-9]) ]]
-    then
-        if (( $(echo "$RESULT2 > 0.1" | bc -l) ));
+        if [[ $RESULT2 == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $RESULT2 == ?(?([-+])*([0-9])).+([0-9]) ]]
         then
-            printf " - Funds: ${GREEN}%10.2f${NC}" $RESULT2
-        else
-            printf " - Funds: ${RED}%10.2f${NC}" $RESULT2
+            if (( $(echo "$RESULT2 > 0.1" | bc -l) ));
+            then
+                printf " - Funds: ${GREEN}%10.2f${NC}" $RESULT2
+            else
+                printf " - Funds: ${RED}%10.2f${NC}" $RESULT2
+            fi
         fi
-    fi
 
-    OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
-    if [ "$SIZE" -gt "4000000" ]; then
-        printf " - WSize: ${RED}%5s${NC}" $OUTSTR 
+        OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
+        if [ "$SIZE" -gt "4000000" ]; then
+            printf " - WSize: ${RED}%5s${NC}" $OUTSTR 
+        else
+            printf " - WSize: ${GREEN}%5s${NC}" $OUTSTR
+        fi
+
+        if [[ "$TIME" > "0.05" ]]; then
+            printf " - Time: ${RED}%5ss${NC}" $TIME          
+        else
+            printf " - Time: ${GREEN}%5ss${NC}" $TIME
+        fi
+
+        printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
+
+        if [[ "$(/home/eclips/tools/checkfork2.sh ${list})" == "1" ]]; then
+            printf " ${RED}Fork!${NC}" 
+        fi
+
+        printf "\n"
+        RESULT=""
+        RESULT1=""
+        RESULT2=""
+        TIME=""
+        SIZE=""
+
     else
-        printf " - WSize: ${GREEN}%5s${NC}" $OUTSTR
+        printf "${RED} Not Running ${NC}\n"
     fi
-
-    if [[ "$TIME" > "0.05" ]]; then
-        printf " - Time: ${RED}%5ss${NC}" $TIME          
-    else
-        printf " - Time: ${GREEN}%5ss${NC}" $TIME
-    fi
-
-    printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
-
-    if [[ "$(/home/eclips/tools/checkfork2.sh ${list})" == "1" ]]; then
-        printf " ${RED}Fork!${NC}" 
-    fi
-
-    printf "\n"
-    RESULT=""
-    RESULT1=""
-    RESULT2=""
-    TIME=""
-    SIZE=""
-
-else
-    printf "${RED} Not Running ${NC}\n"
 fi
 count=$(( $count +1 ))
     done
