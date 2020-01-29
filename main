@@ -20,6 +20,7 @@ nn_ipaddress=$(hostname -I | sed 's/.$//')
 referencenode=$REFNODE
 #How many transactions back to scan for notarizations
 txscanamount=777
+txfeeperkb=0.000035
 
 ignoreacs=('VOTE2018' 'VOTE2019' 'BEER' 'PIZZA' 'VRSC' 'HUSH3')
 sproutcoins=('OOT' 'ZILLA')
