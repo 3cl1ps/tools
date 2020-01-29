@@ -116,6 +116,6 @@ waitforconfirm ${txid}
 echo "[${coin}] Returned funds confirmed"
 
 echo "[${coin}] Running UTXO splitter"
-./utxosplitter.sh ${coin}
+/home/eclips/tools/acsplit ${coin} 30
 
 echo "[${coin}] Wallet reset complete!"
