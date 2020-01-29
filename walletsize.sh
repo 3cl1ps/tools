@@ -37,7 +37,6 @@ ignore_list=(
   VOTE2019
   PIZZA
   BEER
-  VRSC
   PIRATE
 )
 
