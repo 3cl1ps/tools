@@ -30,10 +30,6 @@ addnodes="-addnode=seed.komodostats.com -addnode=seed.webworker.sh"
 #Configure initial seeds to connect to iguana network
 dpowseeds=('95.213.238.100' '77.75.121.138' '103.6.12.105' '139.99.209.214')
 
-coinsfirst=(
-'BTC bitcoin-cli bitcoind ../../bitcoin'
-)
-
 #defaults
 addnodes=${addnodes:="-addnode=seed.komodostats.com -addnode=seed.webworker.sh"}
 datetime=${datetime:=$(date '+%Y-%m-%d %H:%M:%S')}
