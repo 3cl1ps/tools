@@ -2,6 +2,8 @@
 GR='\033[0;32m'
 NC='\033[0m'
 
+source /home/eclips/tools/main
+
 printf "\n${GR}>>> CHECKING KOMODO${NC}\n"
 cd ${repos[KMD,0]} && git checkout ${repos[KMD,1]} && git pull && make -j8 || git clean -fdx && cp ../dPoW/iguana/pubkey.txt src/ && ./zcutil/build.sh -j8
 
