@@ -59,7 +59,6 @@ if [[ "$consolidateamount" != "null" ]]; then
         rawtxresult=$(komodo-cli $asset createrawtransaction "${consolidatethese}" '''{ "'$KMDADDRESS'": '$consolidateamountfixed' }''')
         rawtxid=$(sendRaw ${rawtxresult} ${coin})
 
-        log "consolidate" "${coin} - Sent $consolidateamount to $KMDADDRESS TXID: $rawtxid" "green" "file"
-        echo $rawtxid
+        echo "consolidate" "${coin} - Sent $consolidateamount to $KMDADDRESS TXID: $rawtxid" "green" "file"
     fi
 fi
