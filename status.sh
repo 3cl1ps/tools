@@ -197,9 +197,9 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
 
         printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
 
-        if [[ "$(/home/eclips/tools/checkfork2.sh ${list})" == "1" ]]; then
-            printf " ${RED}Fork!${NC}" 
-        fi
+        #if [[ "$(/home/eclips/tools/checkfork2.sh ${list})" == "1" ]]; then
+        #    printf " ${RED}Fork!${NC}" 
+        #fi
 
         printf "\n"
         RESULT=""
