@@ -18,84 +18,22 @@ else
     printf "${RED} Not Running${NC}\n"
 fi
 
-
-processlist=(
-'komodod'
-'bitcoind'
-'verusd'
-)
-
-count=0
-while [ "x${processlist[count]}" != "x" ]
-do
-    repo=(${repos[KMD]})
-    printf "%-13s" ${processlist[count]}
-    if ps aux | grep -v grep | grep ${processlist[count]} >/dev/null; then
-        if [ "$count" = "0" ]; then
-            balance="$(komodo-cli -rpcclienttimeout=15 getbalance)"
-            if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-                printf "${GREEN} Running ${NC}"
-                if (( $(echo "$balance > 0.1" | bc -l) )); then
-                    printf " - Funds: ${GREEN}%10.2f${NC}" $balance
-                else
-                    printf " - Funds: ${RED}%10.2f${NC}" $balance
-                fi
-            else
-                printf "${YELLOW} Loading ${NC}"
-                continue
-            fi
-            listunspent="$(komodo-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
-            countunspent="$(komodo-cli -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
-            SIZE=$(stat --printf="%s" /home/eclips/.komodo/wallet.dat)
-            TIME=$((time komodo-cli listunspent) 2>&1 >/dev/null)
-            txinfo=$(komodo-cli listtransactions "" $txscanamount)
-            lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"') 
-        fi
-        if [ "$count" = "1" ]; then
-            balance="$(bitcoin-cli -rpcclienttimeout=15 getbalance)"
-            if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-                printf "${GREEN} Running ${NC}"
-                if (( $(echo "$balance > 0.1" | bc -l) )); then
-                    printf " - Funds: ${GREEN}%10.2f${NC}" $balance
-                else
-                    printf " - Funds: ${RED}%10.2f${NC}" $balance
-                fi
-            else
-                printf "${YELLOW} Loading ${NC}"
-                continue
-            fi
-            listunspent="$(bitcoin-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
-            countunspent="$(bitcoin-cli -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
-            txinfo=$(bitcoin-cli listtransactions "" $txscanamount)
-            lastntrztime=$(echo $txinfo | jq -r --arg address "$btcntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
-
-            if [ -e /home/eclips/.bitcoin/wallet.dat ]; then
-                SIZE=$(stat --printf="%s" /home/eclips/.bitcoin/wallet.dat)
-            fi
-            if [ -e /bitcoin/wallet.dat ]; then
-                SIZE=$(stat --printf="%s" /bitcoin/wallet.dat)
-            fi
-            TIME=$((time bitcoin-cli listunspent) 2>&1 >/dev/null)
-        fi
-        if [ "$count" = "2" ]; then
-            balance="$(verus -rpcclienttimeout=15 getbalance)"
-            if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-                printf "${GREEN} Running ${NC}"
-                if (( $(echo "$balance > 0.1" | bc -l) )); then
-                    printf " - Funds: ${GREEN}%10.2f${NC}" $balance
-                else
-                    printf " - Funds: ${RED}%10.2f${NC}" $balance
-                fi
-            else
-                printf "${YELLOW} Loading ${NC}"
-                continue
-            fi
-            listunspent="$(verus -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
-            countunspent="$(verus -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
-            SIZE=$(stat --printf="%s" /home/eclips/.komodo/VRSC/wallet.dat)
-            TIME=$((time verus listunspent) 2>&1 >/dev/null)
-            txinfo=$(verus listtransactions "" $txscanamount)
-            lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"') 
+repo=(${repos[KMD]})
+printf "%-13s" "komodod"
+if ps aux | grep -v grep | grep komodod >/dev/null; then
+    balance="$(komodo-cli -rpcclienttimeout=15 getbalance 2>&1)"
+    if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        printf "${GREEN} Running${NC}"
+        listunspent="$(komodo-cli -rpcclienttimeout=15 listunspent 2>&1 | grep .00010000 | wc -l)"
+        countunspent="$(komodo-cli -rpcclienttimeout=15 listunspent 2>&1|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+        SIZE=$(stat --printf="%s" /home/eclips/.komodo/wallet.dat)
+        TIME=$((time komodo-cli listunspent) 2>&1 >/dev/null)
+        txinfo=$(komodo-cli listtransactions "" $txscanamount 2>&1)
+        lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"') 
+        if (( $(echo "$balance > 0.1" | bc -l) )); then
+            printf " - Funds: ${GREEN}%10.2f${NC}" $balance
+        else
+            printf " - Funds: ${RED}%10.2f${NC}" $balance
         fi
         # Check if we have actual results next two lines check for valid number.
         if [[ $listunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $listunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
@@ -114,7 +52,6 @@ do
                 printf  " - Dust: ${GREEN}%3s${NC}" $countunspent
             fi
         fi
-
 
         OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
         if [ "$SIZE" -gt "4000000" ]; then
@@ -135,21 +72,138 @@ do
         printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
         #fi
 
+    else
+        printf "${YELLOW} Loading ${NC}"
+    fi
+    printf "\n"
+fi
 
-        printf "\n"
-        listunspent=""
-        countunspent=""
-        balance=""
-        SIZE=""
-        TIME=""
+printf "%-13s" "bitcoind"
+if ps aux | grep -v grep | grep bitcoind >/dev/null; then
+    balance="$(bitcoin-cli -rpcclienttimeout=15 getbalance 2>&1)"
+    if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        printf "${GREEN} Running${NC}"
+        listunspent="$(bitcoin-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
+        countunspent="$(bitcoin-cli -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+        txinfo=$(bitcoin-cli listtransactions "" $txscanamount)
+        lastntrztime=$(echo $txinfo | jq -r --arg address "$btcntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
+        if (( $(echo "$balance > 0.1" | bc -l) )); then
+            printf " - Funds: ${GREEN}%10.2f${NC}" $balance
+        else
+            printf " - Funds: ${RED}%10.2f${NC}" $balance
+        fi
+        # Check if we have actual results next two lines check for valid number.
+        if [[ $listunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $listunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+            if [[ "$listunspent" -lt "15" ]] || [[ "$listunspent" -gt "50" ]]; then
+                printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
+            else
+                printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
+            fi
+        fi
+
+        if [[ $countunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $countunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+            if [ "$countunspent" -gt "0" ]
+            then
+                printf  " - Dust: ${RED}%3s${NC}" $countunspent
+            else
+                printf  " - Dust: ${GREEN}%3s${NC}" $countunspent
+            fi
+        fi
+
+        OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
+        if [ "$SIZE" -gt "4000000" ]; then
+            printf " - WSize: ${RED}%5s${NC}" $OUTSTR           
+        else
+            printf " - WSize: ${GREEN}%5s${NC}" $OUTSTR
+        fi
+
+        if [[ "$TIME" > "0.05" ]]; then
+            printf " - Time: ${RED}%3ss${NC}" $TIME          
+        else
+            printf " - Time: ${GREEN}%3ss${NC}" $TIME
+        fi
+
+        #if [[ "$lastntrztime" > "0.1" ]]; then
+        #    printf " - ${RED}%3ss${NC}" $TIME          
+        #else
+        printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
+        #fi
+
+        if [ -e /home/eclips/.bitcoin/wallet.dat ]; then
+            SIZE=$(stat --printf="%s" /home/eclips/.bitcoin/wallet.dat)
+        fi
+        if [ -e /bitcoin/wallet.dat ]; then
+            SIZE=$(stat --printf="%s" /bitcoin/wallet.dat)
+        fi
+
+        TIME=$((time bitcoin-cli listunspent) 2>&1 >/dev/null)
+    else
+        printf "${YELLOW} Loading ${NC}"
+    fi
+    printf "\n"
+fi
+
+printf "%-13s" "verusd"
+if ps aux | grep -v grep | grep verusd >/dev/null; then
+    balance="$(verus -rpcclienttimeout=15 getbalance)"
+    if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        printf "${GREEN} Running${NC}"
+        listunspent="$(verus -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
+        countunspent="$(verus -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+        SIZE=$(stat --printf="%s" /home/eclips/.komodo/VRSC/wallet.dat)
+        TIME=$((time verus listunspent) 2>&1 >/dev/null)
+        txinfo=$(verus listtransactions "" $txscanamount)
+        lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"') 
+        if (( $(echo "$balance > 0.1" | bc -l) )); then
+            printf " - Funds: ${GREEN}%10.2f${NC}" $balance
+        else
+            printf " - Funds: ${RED}%10.2f${NC}" $balance
+        fi
+        # Check if we have actual results next two lines check for valid number.
+        if [[ $listunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $listunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+            if [[ "$listunspent" -lt "15" ]] || [[ "$listunspent" -gt "50" ]]; then
+                printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
+            else
+                printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
+            fi
+        fi
+
+        if [[ $countunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $countunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+            if [ "$countunspent" -gt "0" ]
+            then
+                printf  " - Dust: ${RED}%3s${NC}" $countunspent
+            else
+                printf  " - Dust: ${GREEN}%3s${NC}" $countunspent
+            fi
+        fi
+
+        OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
+        if [ "$SIZE" -gt "4000000" ]; then
+            printf " - WSize: ${RED}%5s${NC}" $OUTSTR           
+        else
+            printf " - WSize: ${GREEN}%5s${NC}" $OUTSTR
+        fi
+
+        if [[ "$TIME" > "0.05" ]]; then
+            printf " - Time: ${RED}%3ss${NC}" $TIME          
+        else
+            printf " - Time: ${GREEN}%3ss${NC}" $TIME
+        fi
+
+        #if [[ "$lastntrztime" > "0.1" ]]; then
+        #    printf " - ${RED}%3ss${NC}" $TIME          
+        #else
+        printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
+        #fi
 
     else
-        printf "${RED} Not Running ${NC}\n"
+        printf "${YELLOW} Loading ${NC}"
     fi
-    count=$(( $count +1 ))
-done
+    printf "\n"
+else
+    printf "${RED} Not Running ${NC}\n"
+fi
 
-count=0
 $HOME/tools/listassetchains | while read list; do
 if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
     printf "%-13s" "${list}"
@@ -165,7 +219,7 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
             fi
         else
             printf "${YELLOW} Loading ${NC}"
-            continue
+            printf "\n"
         fi
         countunspent="$(komodo-cli -ac_name=${list} -rpcclienttimeout=15 listunspent 2>&1 |grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
         SIZE=$(stat --printf="%s" ~/.komodo/${list}/wallet.dat)
@@ -209,16 +263,15 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
         #    printf " ${RED}Fork!${NC}" 
         #fi
 
-        printf "\n"
         listunspent=""
         countunspent=""
         balance=""
         TIME=""
         SIZE=""
-
+        printf "\n"
     else
         printf "${RED} Not Running ${NC}\n"
     fi
+    printf "\n"
 fi
-count=$(( $count +1 ))
-    done
+done
