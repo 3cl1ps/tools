@@ -211,7 +211,7 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
     then
         balance="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} getbalance 2>&1)"
         if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-            printf "${GREEN} Running ${NC}"
+            printf "${GREEN} Running${NC}"
             if (( $(echo "$balance > 0.1" | bc -l) )); then
                 printf " - Funds: ${GREEN}%10.2f${NC}" $balance
             else
@@ -272,6 +272,5 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
     else
         printf "${RED} Not Running ${NC}\n"
     fi
-    printf "\n"
 fi
 done
