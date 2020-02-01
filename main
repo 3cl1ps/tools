@@ -10,6 +10,7 @@
 source /home/eclips/.bash_profile
 source /home/eclips/install/functions
 source /home/eclips/install/repos
+source /home/eclips/tools/coinlist
 
 #set to 1 if this is the server for third party coins, else leave as 0
 thirdpartycoins=0
@@ -24,12 +25,6 @@ txfeeperkb=0.000035
 
 ignoreacs=('VOTE2018' 'VOTE2019' 'BEER' 'PIZZA' 'VRSC' 'HUSH3')
 sproutcoins=('OOT' 'ZILLA')
-
-#Add additional -addnode parameters for coin daemons
-addnodes="-addnode=seed.komodostats.com -addnode=seed.webworker.sh"
-
-#Configure initial seeds to connect to iguana network
-dpowseeds=('95.213.238.100' '77.75.121.138' '103.6.12.105' '139.99.209.214')
 
 #defaults
 addnodes=${addnodes:="-addnode=seed.komodostats.com -addnode=seed.webworker.sh"}
