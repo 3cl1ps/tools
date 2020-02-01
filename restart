@@ -14,5 +14,9 @@ while [[ ${started} -eq 0 ]]; do
     started=1
   fi
 done
+if ! ps aux | grep -v grep | grep ${processlist[count]} >/dev/null; then
+  /home/eclips/komodo/src/komodod -gen -genproclimit=1 -notary -pubkey=$PUBKEY -minrelaytxfee=0.000035 -opretmintxfee=0.004 &
+fi
+sleep 10
 #iguana
 /home/eclips/tools/otary
