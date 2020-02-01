@@ -4,7 +4,7 @@ if [[ -z $1 ]]; then
   exit
 fi
 
-./listassetchains | while read coin; do
+/home/eclips/tools/listassetchains | while read coin; do
   #echo $coin
   komodo-cli -ac_name=$coin "${@}"
 done
