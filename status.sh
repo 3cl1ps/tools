@@ -144,11 +144,11 @@ fi
 
 printf "%-13s" "verusd"
 if ps aux | grep -v grep | grep verusd >/dev/null; then
-    balance="$(verus -rpcclienttimeout=15 getbalance)"
+    balance="$(verus -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
         printf "${GREEN} Running${NC}"
         listunspent="$(verus -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
-        countunspent="$(verus -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+        countunspent="$(verus -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
         SIZE=$(stat --printf="%s" /home/eclips/.komodo/VRSC/wallet.dat)
         TIME=$((time verus listunspent) 2>&1 >/dev/null)
         txinfo=$(verus listtransactions "" $txscanamount)
