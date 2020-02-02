@@ -66,7 +66,7 @@ if ps aux | grep -v grep | grep komodod >/dev/null; then
         now=$(date +%s)
         window=$(echo "$now - 3*3600" | bc -l)
         speed=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
-        if [[ "$speed" < "100" ]]; then
+        if (( $speed < 100 )); then
             printf " - S: ${RED}%3s${NC}" $speed  
         else
             printf " - S: ${GREEN}%3s${NC}" $speed
@@ -139,7 +139,7 @@ if ps aux | grep -v grep | grep bitcoind >/dev/null; then
         now=$(date +%s)
         window=$(echo "$now - 3*3600" | bc -l)
         speed=$(echo $txinfo | jq -r --arg address "$btcntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
-        if [[ "$speed" < "100" ]]; then
+        if (( $speed < 100 )); then
             printf " - S: ${RED}%3s${NC}" $speed  
         else
             printf " - S: ${GREEN}%3s${NC}" $speed
@@ -206,7 +206,7 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
         now=$(date +%s)
         window=$(echo "$now - 3*3600" | bc -l)
         speed=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
-        if [[ "$speed" < "100" ]]; then
+        if (( $speed < 100 )); then
             printf " - S: ${RED}%3s${NC}" $speed  
         else
             printf " - S: ${GREEN}%3s${NC}" $speed
@@ -278,7 +278,7 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
             now=$(date +%s)
             window=$(echo "$now - 3*3600" | bc -l)
             speed=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
-            if [[ "$speed" < "100" ]]; then
+            if (( $speed < 100 )); then
                 printf " - S: ${RED}%3s${NC}" $speed  
             else
                 printf " - S: ${GREEN}%3s${NC}" $speed
