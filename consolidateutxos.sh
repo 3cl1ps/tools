@@ -10,7 +10,6 @@
 #
 scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source $scriptpath/main
-
 if [[ -z $1 ]]; then
     echo "consolidate <coinname> <exclude_amount (optional - consolidate all but this value)"
     exit 0
@@ -20,7 +19,7 @@ number_regex='^[0-9]+([.][0-9]+)?$'
 
 if [[ -z $2 ]]; then
     filter_amount=0
-#check amount is a number
+    #check amount is a number
 elif [[ ! -z $2 ]] && ! [[ $2 =~ $number_regex ]] ; then
     echo "exclude_amount must be a number"
     exit 0
@@ -41,6 +40,7 @@ fi
 
 unspent=$(komodo-cli $asset listunspent)
 if (( ${filter_amount} > 0 )); then
+    echo ici
     consolidateutxo=$(jq --arg checkaddr $KMDADDRESS --arg exclude_amount $exclude_amount '[.[] | select (.amount!=($exclude_amount|tonumber) and .address==$checkaddr and .spendable==true)] | sort_by(-.amount)[0:399]' <<< $unspent)
 else
     consolidateutxo=$(jq --arg checkaddr $KMDADDRESS '[.[] | select (.address==$checkaddr and .spendable==true)] | sort_by(-.amount)[0:399]' <<< $unspent)
@@ -50,10 +50,8 @@ consolidatetheselength=$(jq -r '. | length' <<< $consolidateutxo)
 consolidateamount=$(jq -r '[.[].amount] | add' <<< $consolidateutxo)
 
 txfee=$(calcFee ${consolidatetheselength} 1 "p2pkh" "p2pkh")
-
 if [[ "$consolidateamount" != "null" ]]; then
     consolidateamountfixed=$( printf "%.8f" $(bc -l <<< "(${consolidateamount}-${txfee})") )
-
     if (( $(echo "$consolidateamountfixed > 0" | bc -l) )); then
 
         rawtxresult=$(komodo-cli $asset createrawtransaction "${consolidatethese}" '''{ "'$KMDADDRESS'": '$consolidateamountfixed' }''')
