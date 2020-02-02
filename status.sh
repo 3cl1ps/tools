@@ -63,12 +63,12 @@ if ps aux | grep -v grep | grep komodod >/dev/null; then
         printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
         #speed
         now=$(date +%s)
-        window=$(echo "$now - 3*3600" | bc -l)
+        window=$(echo "$now - 3600" | bc -l)
         speed=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
-        if (( $speed < 100 )); then
-            printf " - S: ${RED}%3s${NC}" $speed  
+        if (( $speed < 10 )); then
+            printf " - Speed1: ${RED}%2s${NC}" $speed  
         else
-            printf " - S: ${GREEN}%3s${NC}" $speed
+            printf " - Speed1: ${GREEN}%2s${NC}" $speed
         fi
     else
         printf "${YELLOW}Komodo Loading${NC}"
@@ -140,9 +140,9 @@ if ps aux | grep -v grep | grep bitcoind >/dev/null; then
         window=$(echo "$now - 3*3600" | bc -l)
         speed=$(echo $txinfo | jq -r --arg address "$btcntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
         if (( $speed < 10 )); then
-            printf " - S: ${RED}%3s${NC}" $speed  
+            printf " - Speed3: ${RED}%2s${NC}" $speed  
         else
-            printf " - S: ${GREEN}%3s${NC}" $speed
+            printf " - Speed3: ${GREEN}%2s${NC}" $speed
         fi
     else
         printf "${YELLOW}Bitcoin Loading${NC}"
@@ -208,9 +208,9 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
         window=$(echo "$now - 3*3600" | bc -l)
         speed=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
         if (( $speed < 1 )); then
-            printf " - S: ${RED}%3s${NC}" $speed  
+            printf " - Speed3: ${RED}%2s${NC}" $speed  
         else
-            printf " - S: ${GREEN}%3s${NC}" $speed
+            printf " - Speed3: ${GREEN}%2s${NC}" $speed
         fi
     else
         printf "${YELLOW}Verus Loading${NC}"
@@ -278,9 +278,9 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
             window=$(echo "$now - 3*3600" | bc -l)
             speed=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
             if (( $speed < 1 )); then
-                printf " - S: ${RED}%3s${NC}" $speed  
+                printf " - Speed3: ${RED}%2s${NC}" $speed  
             else
-                printf " - S: ${GREEN}%3s${NC}" $speed
+                printf " - Speed3: ${GREEN}%2s${NC}" $speed
             fi
         else
             printf "${YELLOW}${list} Loading${NC}\n"
