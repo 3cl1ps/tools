@@ -10,19 +10,18 @@ NC='\033[0m' # No Color
 btcntrzaddr=1P3rU1Nk1pmc2BiWC8dEy9bZa1ZbMp5jfg
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 
-printf "%-9s" "iguana"
 if ps aux | grep -v grep | grep iguana >/dev/null
 then 
-    printf "${GREEN} Run${NC}\n"
+    printf "${GREEN}%-9s${NC}" "iguana"
 else
-    printf "${RED} Not Run${NC}\n"
+    printf "%-20s" "iguana Not Running"
 fi
+printf "\n"
 
-printf "%-9s" "komodod"
 if ps aux | grep -v grep | grep komodod >/dev/null; then
     balance="$(komodo-cli -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-        printf "${GREEN} Run${NC}"
+        printf "${GREEN}%-9s${NC}" "komodo"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
         else
@@ -72,7 +71,7 @@ if ps aux | grep -v grep | grep komodod >/dev/null; then
             printf " - S: ${GREEN}%3s${NC}" $speed
         fi
     else
-        printf "${YELLOW} Loading ${NC}"
+        printf "${YELLOW}Komodo Loading${NC}"
     fi
     balance=""
     listunspent=""
@@ -83,14 +82,15 @@ if ps aux | grep -v grep | grep komodod >/dev/null; then
     OUTSTR=""
     txinfo=""
     lastntrztime=""
-    printf "\n"
+else
+    printf "${RED}Komodo Not Running${NC}"
 fi
+printf "\n"
 
-printf "%-9s" "bitcoind"
 if ps aux | grep -v grep | grep bitcoind >/dev/null; then
     balance="$(bitcoin-cli -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-        printf "${GREEN} Run${NC}"
+        printf "${GREEN}%-9s${NC}" "bitcoind"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
         else
@@ -139,13 +139,13 @@ if ps aux | grep -v grep | grep bitcoind >/dev/null; then
         now=$(date +%s)
         window=$(echo "$now - 3*3600" | bc -l)
         speed=$(echo $txinfo | jq -r --arg address "$btcntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
-        if (( $speed < 100 )); then
+        if (( $speed < 10 )); then
             printf " - S: ${RED}%3s${NC}" $speed  
         else
             printf " - S: ${GREEN}%3s${NC}" $speed
         fi
     else
-        printf "${YELLOW} Loading ${NC}"
+        printf "${YELLOW}Bitcoin Loading${NC}"
     fi
     balance=""
     listunspent=""
@@ -156,14 +156,15 @@ if ps aux | grep -v grep | grep bitcoind >/dev/null; then
     OUTSTR=""
     txinfo=""
     lastntrztime=""
-    printf "\n"
+else
+    printf "${RED}Bitcoin Not Running${NC}"
 fi
+printf "\n"
 
-printf "%-9s" "verusd"
 if ps aux | grep -v grep | grep verusd >/dev/null; then
     balance="$(verus -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-        printf "${GREEN} Run${NC}"
+        printf "${GREEN}%-9s${NC}" "verusd"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
         else
@@ -206,13 +207,13 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
         now=$(date +%s)
         window=$(echo "$now - 3*3600" | bc -l)
         speed=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
-        if (( $speed < 100 )); then
+        if (( $speed < 1 )); then
             printf " - S: ${RED}%3s${NC}" $speed  
         else
             printf " - S: ${GREEN}%3s${NC}" $speed
         fi
     else
-        printf "${YELLOW} Loading ${NC}"
+        printf "${YELLOW}Verus Loading${NC}"
     fi
     balance=""
     listunspent=""
@@ -223,26 +224,24 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
     OUTSTR=""
     txinfo=""
     lastntrztime=""
-    printf "\n"
 else
-    printf "${RED} Not Run ${NC}\n"
+    printf "${RED}Verus Not Running${NC}"
 fi
+printf "\n"
 
 $HOME/tools/listassetchains | while read list; do
 if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
-    printf "%-9s" "${list}"
     if ps aux | grep -v grep | grep ${list} >/dev/null
     then
         balance="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} getbalance 2>&1)"
         if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-            printf "${GREEN} Run${NC}"
+            printf "${GREEN}%-9s${NC}" "${list}"
             if (( $(echo "$balance > 0.1" | bc -l) )); then
                 printf " - Funds: ${GREEN}%10.2f${NC}" $balance
             else
                 printf " - Funds: ${RED}%10.2f${NC}" $balance
             fi
             listunspent="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} listunspent 2>&1 | grep .00010000 | wc -l)"
-            # Check if we have actual results next two lines check for valid number.
             if [[ $listunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $listunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
                 if [[ "$listunspent" -lt "30" ]] || [[ "$listunspent" -gt "110" ]]; then
                     printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
@@ -278,13 +277,13 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
             now=$(date +%s)
             window=$(echo "$now - 3*3600" | bc -l)
             speed=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" --argjson window "$window" '[.[] | select(.address==$address and .time > $window)] | length')
-            if (( $speed < 100 )); then
+            if (( $speed < 1 )); then
                 printf " - S: ${RED}%3s${NC}" $speed  
             else
                 printf " - S: ${GREEN}%3s${NC}" $speed
             fi
         else
-            printf "${YELLOW} Loading ${NC}\n"
+            printf "${YELLOW}${list} Loading${NC}\n"
             continue
         fi
         balance=""
@@ -296,9 +295,9 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
         OUTSTR=""
         txinfo=""
         lastntrztime=""
-        printf "\n"
     else
-        printf "${RED} Not Run ${NC}\n"
+        printf "${RED}${list} Not Running${NC}"
     fi
+    printf "\n"
 fi
 done
