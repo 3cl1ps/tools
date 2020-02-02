@@ -10,19 +10,19 @@ NC='\033[0m' # No Color
 btcntrzaddr=1P3rU1Nk1pmc2BiWC8dEy9bZa1ZbMp5jfg
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 
-printf "%-10s" "iguana"
+printf "%-9s" "iguana"
 if ps aux | grep -v grep | grep iguana >/dev/null
 then 
-    printf "${GREEN} Running${NC}\n"
+    printf "${GREEN} Run${NC}\n"
 else
-    printf "${RED} Not Running${NC}\n"
+    printf "${RED} Not Run${NC}\n"
 fi
 
-printf "%-10s" "komodod"
+printf "%-9s" "komodod"
 if ps aux | grep -v grep | grep komodod >/dev/null; then
     balance="$(komodo-cli -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-        printf "${GREEN} Running${NC}"
+        printf "${GREEN} Run${NC}"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
         else
@@ -86,11 +86,11 @@ if ps aux | grep -v grep | grep komodod >/dev/null; then
     printf "\n"
 fi
 
-printf "%-10s" "bitcoind"
+printf "%-9s" "bitcoind"
 if ps aux | grep -v grep | grep bitcoind >/dev/null; then
     balance="$(bitcoin-cli -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-        printf "${GREEN} Running${NC}"
+        printf "${GREEN} Run${NC}"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
         else
@@ -159,11 +159,11 @@ if ps aux | grep -v grep | grep bitcoind >/dev/null; then
     printf "\n"
 fi
 
-printf "%-10s" "verusd"
+printf "%-9s" "verusd"
 if ps aux | grep -v grep | grep verusd >/dev/null; then
     balance="$(verus -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-        printf "${GREEN} Running${NC}"
+        printf "${GREEN} Run${NC}"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
         else
@@ -225,17 +225,17 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
     lastntrztime=""
     printf "\n"
 else
-    printf "${RED} Not Running ${NC}\n"
+    printf "${RED} Not Run ${NC}\n"
 fi
 
 $HOME/tools/listassetchains | while read list; do
 if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
-    printf "%-10s" "${list}"
+    printf "%-9s" "${list}"
     if ps aux | grep -v grep | grep ${list} >/dev/null
     then
         balance="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} getbalance 2>&1)"
         if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
-            printf "${GREEN} Running${NC}"
+            printf "${GREEN} Run${NC}"
             if (( $(echo "$balance > 0.1" | bc -l) )); then
                 printf " - Funds: ${GREEN}%10.2f${NC}" $balance
             else
@@ -298,7 +298,7 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
         lastntrztime=""
         printf "\n"
     else
-        printf "${RED} Not Running ${NC}\n"
+        printf "${RED} Not Run ${NC}\n"
     fi
 fi
 done
