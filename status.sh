@@ -70,6 +70,8 @@ if ps aux | grep -v grep | grep komodod >/dev/null; then
         else
             printf " - Speed1: ${GREEN}%2s${NC}" $speed
         fi
+        #graph
+        echo "$listunspent" ";" "$SIZE" ";" "$TIME" ";" "$speed" >> /tmp/graph
     else
         printf "${YELLOW}Komodo Loading${NC}"
     fi
