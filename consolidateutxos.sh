@@ -8,8 +8,10 @@
 #
 # @author webworker01
 #
-scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+#scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source $scriptpath/main
+txfeeperkb=0.000035
+
 if [[ -z $1 ]]; then
     echo "consolidate <coinname> <exclude_amount (optional - consolidate all but this value)"
     exit 0

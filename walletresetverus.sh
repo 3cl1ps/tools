@@ -6,7 +6,6 @@ daemon="verusd -pubkey=${PUBKEY}"
 daemon_process_regex="verusd.*\-pubkey"
 cli="verus"
 wallet_file="${HOME}/.komodo/VRSC/wallet.dat"
-nn_address=$KMDADDRESS
 
 ./walletreset.sh \
     "${coin}" \
@@ -14,4 +13,4 @@ nn_address=$KMDADDRESS
     "${daemon_process_regex}" \
     "${cli}" \
     "${wallet_file}" \
-    "${nn_address}"
+    "${KMDADDRESS}"

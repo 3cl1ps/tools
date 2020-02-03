@@ -12,19 +12,7 @@ source /home/eclips/install/functions
 source /home/eclips/install/repos
 source /home/eclips/tools/coinlist
 
-#set to 1 if this is the server for third party coins, else leave as 0
-thirdpartycoins=0
-iguanaport=7776
-nn_address=$KMDADDRESS
-nn_pubkey=$PUBKEY
-nn_ipaddress=$(hostname -I | sed 's/.$//')
-referencenode=$REFNODE
-#How many transactions back to scan for notarizations
-txscanamount=777
-txfeeperkb=0.000035
-
 ignoreacs=('VOTE2018' 'VOTE2019' 'BEER' 'PIZZA' 'VRSC' 'HUSH3')
-sproutcoins=('OOT' 'ZILLA')
 
 #defaults
 addnodes=${addnodes:="-addnode=seed.komodostats.com -addnode=seed.webworker.sh"}

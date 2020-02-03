@@ -1,7 +1,7 @@
 #!/bin/bash
 # Suggest using with this command: watch --color -n 60 ./status
-scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-source $scriptpath/main
+#scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source /home/eclips/tools/main
 TIMEFORMAT=%R
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -9,7 +9,7 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 btcntrzaddr=1P3rU1Nk1pmc2BiWC8dEy9bZa1ZbMp5jfg
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
-
+txscanamount=2000
 if ps aux | grep -v grep | grep iguana >/dev/null
 then 
     printf "${GREEN}%-9s${NC}" "iguana"

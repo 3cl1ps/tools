@@ -11,15 +11,13 @@ if (( cleanerremoved > 0 )); then
     echo "$dt [cleanwallettransactions] KMD - Removed $cleanerremoved transactions"
 fi
 
-if (( thirdpartycoins < 1 )); then
-    for coins in "${coinlist[@]}"; do
-        coin=($coins)
-        if [[ ! ${ignoreacs[*]} =~ ${coin[0]} ]]; then
-            #echo ${coin[0]}
-            cleanerremoved=$(komodo-cli -ac_name=${coin[0]} cleanwallettransactions | jq -r .removed_transactions)
-            if (( cleanerremoved > 0 )); then
-                echo "$dt [cleanwallettransactions] ${coin[0]} - Removed $cleanerremoved transactions"
-            fi
+for coins in "${coinlist[@]}"; do
+    coin=($coins)
+    if [[ ! ${ignoreacs[*]} =~ ${coin[0]} ]]; then
+        #echo ${coin[0]}
+        cleanerremoved=$(komodo-cli -ac_name=${coin[0]} cleanwallettransactions | jq -r .removed_transactions)
+        if (( cleanerremoved > 0 )); then
+            echo "$dt [cleanwallettransactions] ${coin[0]} - Removed $cleanerremoved transactions"
         fi
-    done
-fi
+    fi
+done
