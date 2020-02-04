@@ -13,4 +13,4 @@ wallet_file="${HOME}/.komodo/wallet.dat"
   "${daemon_process_regex}" \
   "${cli}" \
   "${wallet_file}" \
-  "${KMD8ADDRESS}"
+  "${KMDADDRESS}"
