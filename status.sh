@@ -6,7 +6,9 @@ TIMEFORMAT=%R
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
-NC='\033[0m' # No Color
+NC='\033[0m' # No Coloir
+isNumber='^[+-]?([0-9]+\.?|[0-9]*\.[0-9]+)$'
+#isNumber='^[-+]?[0-9]+\.?[0-9]*$'
 btcntrzaddr=1P3rU1Nk1pmc2BiWC8dEy9bZa1ZbMp5jfg
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 txscanamount=2000
@@ -14,30 +16,30 @@ if ps aux | grep -v grep | grep iguana >/dev/null
 then 
     printf "${GREEN}%-9s${NC}" "iguana"
 else
-    printf "%-20s" "iguana Not Running"
+    printf "${RED}%-20s${NC}" "iguana Not Running"
 fi
 printf "\n"
 
-if ps aux | grep -v grep | grep komodod >/dev/null; then
+if ps aux | grep -v grep | grep komodod | grep notary >/dev/null; then
     balance="$(komodo-cli -rpcclienttimeout=15 getbalance 2>&1)"
-    if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+    if [[ $balance =~ $isNumber ]]; then
         printf "${GREEN}%-9s${NC}" "komodo"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
         else
             printf " - Funds: ${RED}%10.2f${NC}" $balance
         fi
-        listunspent="$(komodo-cli -rpcclienttimeout=15 listunspent 2>&1 | grep .00010000 | wc -l)"
+        listunspent=$(/home/eclips/komodo/src/komodo-cli listunspent | grep .00010000 | wc -l)
         # Check if we have actual results next two lines check for valid number.
-        if [[ $listunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $listunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        if [[ $listunspent =~ $isNumber ]]; then
             if [[ "$listunspent" -lt "15" ]] || [[ "$listunspent" -gt "50" ]]; then
                 printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
             else
                 printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
             fi
         fi
-        countunspent="$(komodo-cli -rpcclienttimeout=15 listunspent 2>&1|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
-        if [[ $countunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $countunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        countunspent="$(komodo-cli -rpcclienttimeout=15 listunspent 2>&1|grep amount |awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+        if [[ $countunspent =~ $isNumber ]]; then
             if [ "$countunspent" -gt "0" ]
             then
                 printf  " - Dust: ${RED}%3s${NC}" $countunspent
@@ -91,7 +93,7 @@ printf "\n"
 
 if ps aux | grep -v grep | grep bitcoind >/dev/null; then
     balance="$(bitcoin-cli -rpcclienttimeout=15 getbalance 2>&1)"
-    if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+    if [[ $balance =~ $isNumber ]]; then
         printf "${GREEN}%-9s${NC}" "bitcoind"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
@@ -99,7 +101,7 @@ if ps aux | grep -v grep | grep bitcoind >/dev/null; then
             printf " - Funds: ${RED}%10.2f${NC}" $balance
         fi
         listunspent="$(bitcoin-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
-        if [[ $listunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $listunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        if [[ $listunspent =~ $isNumber ]]; then
             if [[ "$listunspent" -lt "15" ]] || [[ "$listunspent" -gt "50" ]]; then
                 printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
             else
@@ -107,7 +109,7 @@ if ps aux | grep -v grep | grep bitcoind >/dev/null; then
             fi
         fi
         countunspent="$(bitcoin-cli -rpcclienttimeout=15  listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
-        if [[ $countunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $countunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        if [[ $countunspent =~ $isNumber ]]; then
             if [ "$countunspent" -gt "0" ]
             then
                 printf  " - Dust: ${RED}%3s${NC}" $countunspent
@@ -165,7 +167,7 @@ printf "\n"
 
 if ps aux | grep -v grep | grep verusd >/dev/null; then
     balance="$(verus -rpcclienttimeout=15 getbalance 2>&1)"
-    if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+    if [[ $balance =~ $isNumber ]]; then
         printf "${GREEN}%-9s${NC}" "verusd"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
@@ -173,15 +175,15 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
             printf " - Funds: ${RED}%10.2f${NC}" $balance
         fi
         listunspent="$(verus -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
-        if [[ $listunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $listunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        if [[ $listunspent =~ $isNumber ]]; then
             if [[ "$listunspent" -lt "15" ]] || [[ "$listunspent" -gt "50" ]]; then
                 printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
             else
                 printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
             fi
         fi
-        countunspent="$(verus -rpcclienttimeout=15 listunspent|grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
-        if [[ $countunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $countunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        countunspent="$(verus -rpcclienttimeout=15 listunspent|grep amount |awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+        if [[ $countunspent =~ $isNumber ]]; then
             if [ "$countunspent" -gt "0" ]
             then
                 printf  " - Dust: ${RED}%3s${NC}" $countunspent
@@ -236,7 +238,7 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
     if ps aux | grep -v grep | grep ${list} >/dev/null
     then
         balance="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} getbalance 2>&1)"
-        if [[ $balance == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $balance == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+        if [[ $balance =~ $isNumber ]]; then
             printf "${GREEN}%-9s${NC}" "${list}"
             if (( $(echo "$balance > 0.1" | bc -l) )); then
                 printf " - Funds: ${GREEN}%10.2f${NC}" $balance
@@ -244,15 +246,15 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
                 printf " - Funds: ${RED}%10.2f${NC}" $balance
             fi
             listunspent="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} listunspent 2>&1 | grep .00010000 | wc -l)"
-            if [[ $listunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $listunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+            if [[ $listunspent =~ $isNumber ]]; then
                 if [[ "$listunspent" -lt "30" ]] || [[ "$listunspent" -gt "110" ]]; then
                     printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
                 else
                     printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
                 fi
             fi
-            countunspent="$(komodo-cli -ac_name=${list} -rpcclienttimeout=15 listunspent 2>&1 |grep amount|awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
-            if [[ $countunspent == ?([-+])+([0-9])?(.*([0-9])) ]] || [[ $countunspent == ?(?([-+])*([0-9])).+([0-9]) ]]; then
+            countunspent="$(komodo-cli -ac_name=${list} -rpcclienttimeout=15 listunspent 2>&1 |grep amount |awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+            if [[ $countunspent =~ $isNumber ]]; then
                 if [ "$countunspent" -gt "0" ]; then
                     printf  " - Dust: ${RED}%3s${NC}" $countunspent
                 else
