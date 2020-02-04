@@ -17,6 +17,7 @@ then
     printf "${GREEN}%-9s${NC}" "iguana"
 else
     printf "${RED}%-20s${NC}" "iguana Not Running"
+    /home/eclips/tools/force_iguana.sh
 fi
 printf "\n"
 
@@ -73,7 +74,7 @@ if ps aux | grep -v grep | grep komodod | grep notary >/dev/null; then
             printf " - Speed1: ${GREEN}%2s${NC}" $speed
         fi
         #graph
-        echo "$listunspent" ";" "$SIZE" ";" "$TIME" ";" "$speed" >> /tmp/graph
+        echo "$(date +%T)" ";" "$listunspent" ";" "$SIZE" ";" "$TIME" ";" "$speed" >> /tmp/graph
     else
         printf "${YELLOW}Komodo Loading${NC}"
     fi
