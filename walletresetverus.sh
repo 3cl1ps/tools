@@ -1,4 +1,5 @@
 #!/bin/bash
+source /home/eclips/tools/main
 cd "${BASH_SOURCE%/*}" || exit
 
 coin="VERUS"

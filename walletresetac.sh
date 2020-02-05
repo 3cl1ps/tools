@@ -1,4 +1,5 @@
 #!/bin/bash
+source /home/eclips/tools/main
 cd "${BASH_SOURCE%/*}" || exit
 
 # Coin we're resetting
@@ -15,4 +16,4 @@ wallet_file="${HOME}/.komodo/${coin}/wallet.dat"
   "${daemon_process_regex}" \
   "${cli}" \
   "${wallet_file}" \
-  "${KMD8ADDRESS}"
+  "${KMDADDRESS}"
