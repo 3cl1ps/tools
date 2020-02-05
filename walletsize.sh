@@ -26,7 +26,7 @@ function show_walletsize () {
     fi
   elif [ "$1" = "KMD" ]; then
     SIZE=$(stat --printf="%s"  /home/eclips/.komodo/wallet.dat)
-    if [ "$SIZE" -gt "4000000" ]; then
+    if [ "$SIZE" -gt "14000000" ]; then
       /home/eclips/tools/walletresetkmd.sh
     fi
   fi
