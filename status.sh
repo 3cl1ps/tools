@@ -1,6 +1,4 @@
 #!/bin/bash
-# Suggest using with this command: watch --color -n 60 ./status
-#scriptpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source /home/eclips/tools/main
 TIMEFORMAT=%R
 RED='\033[0;31m'
@@ -30,7 +28,7 @@ if ps aux | grep -v grep | grep komodod | grep notary >/dev/null; then
         else
             printf " - Funds: ${RED}%10.2f${NC}" $balance
         fi
-        listunspent=$(/home/eclips/komodo/src/komodo-cli listunspent | grep .00010000 | wc -l)
+        listunspent=$(komodo-cli listunspent | grep .00010000 | wc -l)
         # Check if we have actual results next two lines check for valid number.
         if [[ $listunspent =~ $isNumber ]]; then
             if [[ "$listunspent" -lt "15" ]] || [[ "$listunspent" -gt "50" ]]; then
