@@ -8,7 +8,7 @@ daemon_process_regex="komodod.*\-notary"
 cli="komodo-cli"
 wallet_file="${HOME}/.komodo/wallet.dat"
 
-./walletreset.sh \
+/home/eclips/tools/walletreset.sh \
   "${coin}" \
   "${daemon}" \
   "${daemon_process_regex}" \
