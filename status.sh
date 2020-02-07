@@ -19,7 +19,7 @@ else
 fi
 printf "\n"
 
-if ps aux | grep -v grep | grep komodod | grep notary >/dev/null; then
+if ps aux | grep -v grep | grep "src/komodod" | grep notary >/dev/null; then
     balance="$(komodo-cli -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance =~ $isNumber ]]; then
         printf "${GREEN}%-9s${NC}" "komodo"
