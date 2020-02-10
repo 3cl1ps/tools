@@ -1,1 +1,1 @@
-while true; do echo "Running status at $(date)"; /home/eclips/tools/status.sh; sleep 120 ; done
+while true; do echo "Running status at $(date)"; /home/eclips/tools/status.sh; sleep 30 ; done
