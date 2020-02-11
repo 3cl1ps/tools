@@ -8,7 +8,7 @@ daemon_process_regex="verusd.*\-pubkey"
 cli="verus"
 wallet_file="${HOME}/.komodo/VRSC/wallet.dat"
 
-./walletreset.sh \
+/home/eclips/install/walletreset.sh \
     "${coin}" \
     "${daemon}" \
     "${daemon_process_regex}" \
