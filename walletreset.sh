@@ -28,20 +28,40 @@ address=$6
 date=$(date +%Y-%m-%d:%H:%M:%S)
 
 if [[ "${coin}" = "PIRATE" ]]; then
-  echo "[${coin}] ERROR: Cannot reset ${coin} wallet with this method"
-  exit 1
+    echo "[${coin}] ERROR: Cannot reset ${coin} wallet with this method"
+    exit 1
 fi
 
 echo "[${coin}] Resetting ${coin} wallet - ${date}"
 
 waitforconfirm () {
-  confirmations=0
-  while [[ ${confirmations} -lt 1 ]]; do
-    sleep 1
-    confirmations=$(${cli} gettransaction $1 | jq -r .confirmations)
-    # Keep re-broadcasting
-    ${cli} sendrawtransaction $(${cli} getrawtransaction $1) > /dev/null 2>&1
-  done
+    confirmations=0
+    while [[ ${confirmations} -lt 1 ]]; do
+        sleep 1
+        confirmations=$(${cli} gettransaction $1 | jq -r .confirmations)
+        # Keep re-broadcasting
+        ${cli} sendrawtransaction $(${cli} getrawtransaction $1) > /dev/null 2>&1
+    done
+}
+
+function do_send()
+{
+    RESULT=$(${cli} sendtoaddress $temp_address $BALANCE "" "" true 2>&1)
+    ERRORLEVEL=$?
+}
+
+function get_balance()
+{
+    #echo $komodo_cli $asset getbalance
+    BALANCE=$(${cli} getbalance 2>/dev/null)
+    ERRORLEVEL=$?
+
+    if [ "$ERRORLEVEL" -eq "0" ] && [ "$BALANCE" != "0.00000000" ]; then
+        echo -e "(${GREEN}$coin${RESET}) $BALANCE"
+    else
+        BALANCE="0.00000000"
+        echo -e "(${RED}$coin${RESET}) $BALANCE"
+    fi
 }
 
 echo "[${coin}] Saving the main address privkey to reimport later"
@@ -60,16 +80,38 @@ echo "[${coin}] Unlocking all UTXOs"
 echo "[${coin}] UTXOs unlocked"
 
 echo "[${coin}] Sending entire balance to the temp adress"
-txid=$(${cli} sendtoaddress ${temp_address} $(${cli} getbalance) "" "" true)
-if [ ${#txid} -eq 64 ]
-then
-  echo "[${coin}] Balance sent TXID: ${txid}"
-else 
-  exit 
-fi
+
+get_balance
+#echo "${cli} sendtoaddress $temp_address $BALANCE _ _ true"
+do_send
+
+while [ "$ERRORLEVEL" -ne "0" ]
+do
+    if [[ $RESULT =~ "Transaction too large" ]]; then
+        BALANCE=$(printf %f $(bc -l <<< "scale=8;$BALANCE*0.1"))
+        echo "TX to large. Now trying to send ten 10% chunks of $BALANCE"
+ #       echo "${cli} sendtoaddress $address $BALANCE _ _ true"
+        counter=1
+        while [ $counter -le 10 ]
+        do
+            do_send
+            echo "txid: $RESULT"
+            ((counter++))
+        done
+        echo "Sending whole balance again..."
+        sleep 3
+        get_balance
+ #       echo "${cli} sendtoaddress $temp_address $BALANCE _ _ true"
+        do_send
+    else
+        echo "ERROR: $RESULT"
+        exit
+    fi
+done
+echo "txid: $RESULT"
 
 echo "[${coin}] Waiting for confirmation of sent funds"
-waitforconfirm ${txid}
+waitforconfirm ${RESULT}
 echo "[${coin}] Sent funds confirmed"
 
 echo "[${coin}] Stopping the deamon"
@@ -77,12 +119,12 @@ ${cli} stop
 
 stopped=0
 while [[ ${stopped} -eq 0 ]]; do
-  sleep 1
-  pgrep -af "${daemon_process_regex}" | grep -v "$0" > /dev/null 2>&1
-  outcome=$(echo $?)
-  if [[ ${outcome} -ne 0 ]]; then
-    stopped=1
-  fi
+    sleep 1
+    pgrep -af "${daemon_process_regex}" | grep -v "$0" > /dev/null 2>&1
+    outcome=$(echo $?)
+    if [[ ${outcome} -ne 0 ]]; then
+        stopped=1
+    fi
 done
 
 echo "[${coin}] Backing up and removing wallet file"
@@ -93,12 +135,12 @@ ${daemon} > /dev/null 2>&1 &
 
 started=0
 while [[ ${started} -eq 0 ]]; do
-  sleep 1
-  ${cli} getbalance > /dev/null 2>&1
-  outcome=$(echo $?)
-  if [[ ${outcome} -eq 0 ]]; then
-    started=1
-  fi
+    sleep 1
+    ${cli} getbalance > /dev/null 2>&1
+    outcome=$(echo $?)
+    if [[ ${outcome} -eq 0 ]]; then
+        started=1
+    fi
 done
 
 echo "[${coin}] Importing the temp privkey and rescanning for funds"
