@@ -9,7 +9,7 @@ daemon_process_regex="komodod.*\-ac_name=${coin} -"
 cli="komodo-cli -ac_name=${coin}"
 wallet_file="${HOME}/.komodo/${coin}/wallet.dat"
 
-/home/eclips/tools/walletreset.sh \
+/home/eclips/install/walletreset.sh \
   "${coin}" \
   "${daemon}" \
   "${daemon_process_regex}" \
