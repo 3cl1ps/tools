@@ -72,7 +72,7 @@ if ps aux | grep -v grep | grep "komodod" | grep notary >/dev/null; then
             printf " - Speed1: ${GREEN}%2s${NC}" $speed
         fi
         #graph
-        if [ $(</tmp/graph wc -l) -gt 10000 ]; then 
+        if [ $(</tmp/graph wc -l) -gt 3000 ]; then 
             sed -i '1d' /tmp/graph
         fi
         echo "$(date +%T)" ";" "$listunspent" ";" "$SIZE" ";" "$TIME" ";" "$speed" >> /tmp/graph
