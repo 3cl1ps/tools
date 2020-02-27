@@ -235,7 +235,7 @@ else
 fi
 printf "\n"
 
-$HOME/tools/listassetchains | while read list; do
+/home/eclips/komodo/src/listassetchains | while read list; do
 if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
     if ps aux | grep -v grep | grep ${list} >/dev/null
     then

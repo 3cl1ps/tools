@@ -3,4 +3,4 @@ cd "${BASH_SOURCE%/*}" || exit
 
 echo "BTC"
 echo "KMD"
-./listassetchains
+/home/eclips/komodo/src/listassetchains

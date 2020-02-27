@@ -1,2 +1,0 @@
-#!/bin/bash
-coinlist=($(/home/eclips/tools/listassetchains))

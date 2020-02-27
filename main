@@ -9,7 +9,6 @@
 source /home/eclips/.bash_profile
 source /home/eclips/install/functions
 source /home/eclips/install/repos
-source /home/eclips/tools/coinlist
 
 ignoreacs=('VOTE2018' 'VOTE2019' 'BEER' 'PIZZA' 'VRSC' 'HUSH3')
 

@@ -127,9 +127,7 @@ fi
 outputRow "KMD" $blocks $longest $blockhash
 
 #Loop through coinlist coins
-for coins in "${coinlist[@]}"; do
-    coin=($coins)
-
+/home/eclips/komodo/src/listassetchains | while read coin; do
     if [[ ! ${ignoreacs[*]} =~ ${coin[0]} ]]; then
         blocks=$(komodo-cli -ac_name=${coin[0]} getinfo | jq .blocks)
         longest=$(komodo-cli -ac_name=${coin[0]} getinfo | jq .longestchain)
