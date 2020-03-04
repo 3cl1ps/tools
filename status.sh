@@ -104,7 +104,7 @@ if ps aux | grep -v grep | grep bitcoind >/dev/null; then
         fi
         listunspent="$(bitcoin-cli -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
         if [[ $listunspent =~ $isNumber ]]; then
-            if [[ "$listunspent" -lt "15" ]] || [[ "$listunspent" -gt "50" ]]; then
+            if [[ "$listunspent" -lt "5" ]] || [[ "$listunspent" -gt "50" ]]; then
                 printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
             else
                 printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
@@ -178,7 +178,7 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
         fi
         listunspent="$(verus -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
         if [[ $listunspent =~ $isNumber ]]; then
-            if [[ "$listunspent" -lt "15" ]] || [[ "$listunspent" -gt "50" ]]; then
+            if [[ "$listunspent" -lt "5" ]] || [[ "$listunspent" -gt "50" ]]; then
                 printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
             else
                 printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
@@ -249,7 +249,7 @@ if [[ ! ${ignoreacs[*]} =~ ${list} ]]; then
             fi
             listunspent="$(komodo-cli -rpcclienttimeout=15 -ac_name=${list} listunspent 2>&1 | grep .00010000 | wc -l)"
             if [[ $listunspent =~ $isNumber ]]; then
-                if [[ "$listunspent" -lt "30" ]] || [[ "$listunspent" -gt "110" ]]; then
+                if [[ "$listunspent" -lt "5" ]] || [[ "$listunspent" -gt "110" ]]; then
                     printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
                 else
                     printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
