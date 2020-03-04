@@ -31,7 +31,7 @@ if ps aux | grep -v grep | grep "komodod" | grep notary | grep -v walletreset >/
         listunspent=$(komodo-cli listunspent | grep .00010000 | wc -l)
         # Check if we have actual results next two lines check for valid number.
         if [[ $listunspent =~ $isNumber ]]; then
-            if [[ "$listunspent" -lt "15" ]] || [[ "$listunspent" -gt "50" ]]; then
+            if [[ "$listunspent" -lt "5" ]] || [[ "$listunspent" -gt "50" ]]; then
                 printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
             else
                 printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
