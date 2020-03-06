@@ -10,7 +10,7 @@ isNumber='^[+-]?([0-9]+\.?|[0-9]*\.[0-9]+)$'
 btcntrzaddr=1P3rU1Nk1pmc2BiWC8dEy9bZa1ZbMp5jfg
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 txscanamount=2000
-if ps aux | grep -v grep | grep iguana >/dev/null
+if ps aux | grep -v grep | grep iguana | grep -v force >/dev/null
 then 
     printf "${GREEN}%-9s${NC}" "iguana"
 else
