@@ -15,7 +15,7 @@ then
     printf "${GREEN}%-9s${NC}" "iguana"
 else
     printf "${RED}%-20s${NC}" "iguana Not Running"
-    /home/eclips/tools/force_iguana.sh &
+    /home/eclips/tools/force_dpow.sh &
 fi
 printf "\n"
 
