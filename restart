@@ -1,6 +1,6 @@
 #!/bin/bash
 #update
-/home/eclips/tools/checkpull
+#/home/eclips/tools/checkpull
 #kill
 /home/eclips/tools/pkill
 #start
@@ -8,7 +8,7 @@
 #wait
 started=0
 while [[ ${started} -eq 0 ]]; do
-  komodo-cli -ac_name=WLC21 getbalance || komodo-cli -ac_name=VRSC getbalance> /dev/null 2>&1
+  komodo-cli -ac_name=WLC21 getbalance || komodo-cli -ac_name=VRSC getbalance > /dev/null 2>&1
   outcome=$(echo $?)
   if [[ ${outcome} -eq 0 ]]; then
     started=1
