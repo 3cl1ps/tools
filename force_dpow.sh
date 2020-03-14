@@ -1,5 +1,5 @@
 #!/bin/bash
-sleep 600
+sleep 1200
 if ps aux | grep -v grep | grep iguana >/dev/null                                                                     
 then                                                                                                                  
     exit 0                                                              
