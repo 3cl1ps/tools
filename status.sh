@@ -167,16 +167,16 @@ else
 fi
 printf "\n"
 
-if ps aux | grep -v grep | grep verusd >/dev/null; then
-    balance="$(verus -rpcclienttimeout=15 getbalance 2>&1)"
+if ps aux | grep -v grep | grep VRSC >/dev/null; then
+    balance="$(komodo-cli -ac_name=VRSC -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance =~ $isNumber ]]; then
-        printf "${GREEN}%-9s${NC}" "verusd"
+        printf "${GREEN}%-9s${NC}" "VRSC"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
         else
             printf " - Funds: ${RED}%10.2f${NC}" $balance
         fi
-        listunspent="$(verus -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
+        listunspent="$(komodo-cli -ac_name=VRSC -rpcclienttimeout=15 listunspent | grep .00010000 | wc -l)"
         if [[ $listunspent =~ $isNumber ]]; then
             if [[ "$listunspent" -lt "5" ]] || [[ "$listunspent" -gt "50" ]]; then
                 printf  " - UTXOs: ${RED}%3s${NC}" $listunspent
@@ -184,7 +184,7 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
                 printf  " - UTXOs: ${GREEN}%3s${NC}" $listunspent
             fi
         fi
-        countunspent="$(verus -rpcclienttimeout=15 listunspent|grep amount |awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
+        countunspent="$(komodo-cli -ac_name=VRSC -rpcclienttimeout=15 listunspent|grep amount |awk '{print $2}'|sed s/.$//|awk '$1 < 0.0001'|wc -l)"
         if [[ $countunspent =~ $isNumber ]]; then
             if [ "$countunspent" -gt "0" ]
             then
@@ -200,13 +200,13 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
         else
             printf " - WSize: ${GREEN}%5s${NC}" $OUTSTR
         fi
-        TIME=$((time verus listunspent) 2>&1 >/dev/null)
+        TIME=$((time komodo-cli -ac_name=VRSC listunspent) 2>&1 >/dev/null)
         if [[ "$TIME" > "0.05" ]]; then
             printf " - Time: ${RED}%3ss${NC}" $TIME          
         else
             printf " - Time: ${GREEN}%3ss${NC}" $TIME
         fi
-        txinfo=$(verus listtransactions "" $txscanamount)
+        txinfo=$(komodo-cli -ac_name=VRSC listtransactions "" $txscanamount)
         lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"') 
         printf " - LastN: ${GREEN}%6s${NC}" $(timeSince $lastntrztime)
         #speed
@@ -231,7 +231,7 @@ if ps aux | grep -v grep | grep verusd >/dev/null; then
     txinfo=""
     lastntrztime=""
 else
-    printf "${RED}Verus Not Running${NC}"
+    printf "${RED}VRSC Not Running${NC}"
 fi
 printf "\n"
 
