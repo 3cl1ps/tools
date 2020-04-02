@@ -17,7 +17,7 @@ else
     printf "${RED}%-20s${NC}" "iguana Not Running"
     /home/eclips/tools/force_dpow.sh &
 fi
-printf "\n"
+printf "  "
 
 if ps aux | grep -v grep | grep DPOW >/dev/null
 then 
