@@ -25,7 +25,7 @@ then
 else
     printf "${RED}%-20s${NC}" "DPOW Not Running"
 fi
-printf "\n
+printf "\n"
 
 if ps aux | grep -v grep | grep "komodod" | grep notary | grep -v walletreset >/dev/null; then
     balance="$(komodo-cli -rpcclienttimeout=15 getbalance 2>&1)"
