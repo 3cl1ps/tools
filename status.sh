@@ -167,7 +167,7 @@ else
 fi
 printf "\n"
 
-if ps aux | grep -v grep | grep VRSC >/dev/null; then
+if ps aux | grep -v grep | grep verusd >/dev/null; then
     balance="$(komodo-cli -ac_name=VRSC -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance =~ $isNumber ]]; then
         printf "${GREEN}%-9s${NC}" "VRSC"
