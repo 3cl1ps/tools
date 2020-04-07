@@ -57,7 +57,7 @@ utxo_required=$(calc ${target_utxo_count}-${utxo_count})
 
 if [[ ${utxo_count} -le ${split_threshold} ]]; then
     echo "[${coin}] Splitting ${utxo_required} extra UTXOs"
-    json=$(/home/eclips/tools/acsplit ${coin} ${utxo_required})
+    json=$(/home/eclips/install/acsplit ${coin} ${utxo_required})
     txid=$(echo ${json} | jq -r '.txid')
     if [[ ${txid} != "null" ]]; then
         echo "[${coin}] Split TXID: ${txid}"
