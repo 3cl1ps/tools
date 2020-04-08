@@ -41,10 +41,7 @@ else
 fi
 
 satoshis=10000
-if [[ ${coin} = "GAME" ]]; then
-    satoshis=100000
-fi
-if [[ ${coin} = "EMC2" ]]; then
+if [[ ${coin} = "GAME" || ${coin} = "EMC2" ]] ; then
     satoshis=100000
 fi
 amount=$(calc $satoshis/100000000)
