@@ -1,5 +1,6 @@
 pkill -f iguana
 /home/eclips/komodo/src/komodo-cli stop
+/home/eclips/komodo/src/komodo-cli -ac_name=DPOW stop
 bitcoin-cli stop
 /home/eclips/tools/assets-cli stop
 sleep 60
