@@ -12,4 +12,12 @@ repo=(${repos[VRSC]})
 printf "\n${GR}>>>>>>> CHECKING VERUS${NC}\n"
 cd ${repo[0]} && git checkout ${repo[2]} && git pull && make -j8 || { ./zcutil/build.sh -j8; }
 
+printf "\n${GR}>>>>>>> CHECKING DPW${NC}\n"
+cd ~/dexkomodo
+git checkout jl777
+./zcutil/build.sh -j$(expr $(nproc) - 1)
+cd ~/dexkomodo/src/
+sudo gcc -o /usr/bin/notarizer cc/dapps/notarizer.c -lm
+cd ~
+
 printf "\n"
