@@ -16,8 +16,7 @@ printf "\n${GR}>>>>>>> CHECKING DPW${NC}\n"
 cd ~/dexkomodo
 git checkout jl777
 ./zcutil/build.sh -j$(expr $(nproc) - 1)
-cd ~/dexkomodo/src/
-sudo gcc -o /usr/bin/notarizer cc/dapps/notarizer.c -lm
+#cd ~/dexkomodo/src/ && sudo gcc -o /usr/bin/notarizer cc/dapps/notarizer.c -lm
 cd ~
 
 printf "\n"
