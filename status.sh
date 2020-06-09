@@ -19,14 +19,6 @@ else
 fi
 printf "  "
 
-if ps aux | grep -v grep | grep DPOW >/dev/null
-then 
-    printf "${GREEN}%-9s${NC}" "DPOW"
-else
-    printf "${RED}%-20s${NC}" "DPOW Not Running"
-fi
-printf "\n"
-
 if ps aux | grep -v grep | grep "komodod" | grep notary | grep -v walletreset >/dev/null; then
     balance="$(komodo-cli -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance =~ $isNumber ]]; then
