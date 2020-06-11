@@ -42,7 +42,6 @@ fi
 
 unspent=$(komodo-cli $asset listunspent)
 if (( ${filter_amount} > 0 )); then
-    echo ici
     consolidateutxo=$(jq --arg checkaddr $KMDADDRESS --arg exclude_amount $exclude_amount '[.[] | select (.amount!=($exclude_amount|tonumber) and .address==$checkaddr and .spendable==true)] | sort_by(-.amount)[0:399]' <<< $unspent)
 else
     consolidateutxo=$(jq --arg checkaddr $KMDADDRESS '[.[] | select (.address==$checkaddr and .spendable==true)] | sort_by(-.amount)[0:399]' <<< $unspent)
