@@ -6,7 +6,6 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Coloir
 isNumber='^[+-]?([0-9]+\.?|[0-9]*\.[0-9]+)$'
-#isNumber='^[-+]?[0-9]+\.?[0-9]*$'
 btcntrzaddr=1P3rU1Nk1pmc2BiWC8dEy9bZa1ZbMp5jfg
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 txscanamount=2000
