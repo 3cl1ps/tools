@@ -5,6 +5,9 @@ cd "${BASH_SOURCE%/*}" || exit
 # e.g "KMD"
 specific_coin=$1
 
+if [[ -z "${specific_coin}" ]] || [[ "${specific_coin}" = "BTC" ]]; then
+  echo bitcoin-cli
+fi
 if [[ -z "${specific_coin}" ]] || [[ "${specific_coin}" = "KMD" ]]; then
   echo komodo-cli
 fi
