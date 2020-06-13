@@ -21,7 +21,7 @@ echo "There are currently ${inpool} txes in the mempool"
 echo "BTC/USD: ${USD}"
 echo "Our fee(per byte): ${TXFEE_SATOSHI_BYTE}"
 
-UTXOs=$(curl -s https://blockchain.info/unspent?active=${NN_ADDRESS}|jq '.unspent_outputs|[map(select(( (.value|tonumber) != 10000)))| .[] | {tx_hash_big_endian, tx_output_n, value,script}]')
+UTXOs=$(curl -s "https://blockchain.info/unspent?active=${NN_ADDRESS}&limit=999" | jq ".unspent_outputs|[map(select(( (.value|tonumber) != 10000)))| .[] | {tx_hash_big_endian, tx_output_n, value,script}]")
 
 SPLIT_VALUE=0.0001;COINAGE_TOTAL_SATOSHI=0
 SPLIT_VALUE_SATOSHI=$(bc <<< "${SPLIT_VALUE}*100000000"); SPLIT_VALUE_SATOSHI=("$(printf "%.0f" ${SPLIT_VALUE_SATOSHI})")
