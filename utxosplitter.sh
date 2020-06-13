@@ -30,7 +30,7 @@ cli=$(./listclis.sh ${coin})
 if [[ "${coin}" = "KMD" ]]; then
     target_utxo_count=$kmd_target_utxo_count
     split_threshold=$kmd_split_threshold
-else if [[ "${coin}" = "BTC" ]]; then
+elif [[ "${coin}" = "BTC" ]]; then
     split_threshold=$btc_split_threshold
 else
     target_utxo_count=$other_target_utxo_count
@@ -39,18 +39,16 @@ fi
 
 satoshis=10000
 amount=$(calc $satoshis/100000000)
-
-unlocked_utxos=$(${cli} listunspent | jq -r '.[].amount' | grep ${amount} | wc -l)
+unlocked_utxos=$(${cli} listunspent | jq -r '.[].amount' | grep ${amount} | wc -l) 
 locked_utxos=$(${cli} listlockunspent | jq -r length)
 utxo_count=$(calc ${unlocked_utxos}+${locked_utxos})
-
-utxo_required=$(calc ${target_utxo_count}-${utxo_count})
 
 if [[ ${utxo_count} -le ${split_threshold} ]]; then
     if [[ "${coin}" = "BTC" ]]; then
         /home/eclips/tools/btcsplit.sh
         exit
     fi
+    utxo_required=$(calc ${target_utxo_count}-${utxo_count})
     echo "[${coin}] Splitting ${utxo_required} extra UTXOs"
     json=$(/home/eclips/tools/acsplit ${coin} ${utxo_required})
     txid=$(echo ${json} | jq -r '.txid')
