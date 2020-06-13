@@ -5,8 +5,8 @@ cd "${BASH_SOURCE%/*}" || exit
 # e.g "KMD"
 coin=$1
 
-kmd_target_utxo_count=30
-kmd_split_threshold=10
+kmd_target_utxo_count=50
+kmd_split_threshold=20
 
 btc_split_threshold=20
 
