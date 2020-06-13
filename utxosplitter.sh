@@ -30,6 +30,8 @@ cli=$(./listclis.sh ${coin})
 if [[ "${coin}" = "KMD" ]]; then
     target_utxo_count=$kmd_target_utxo_count
     split_threshold=$kmd_split_threshold
+else if [[ "${coin}" = "BTC" ]]; then
+    split_threshold=$btc_split_threshold
 else
     target_utxo_count=$other_target_utxo_count
     split_threshold=$other_split_threshold
