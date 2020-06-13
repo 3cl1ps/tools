@@ -8,9 +8,6 @@ coin=$1
 kmd_target_utxo_count=30
 kmd_split_threshold=10
 
-btc_target_utxo_count=30
-btc_split_threshold=10
-
 other_target_utxo_count=30
 other_split_threshold=10
 
@@ -32,18 +29,12 @@ cli=$(./listclis.sh ${coin})
 if [[ "${coin}" = "KMD" ]]; then
     target_utxo_count=$kmd_target_utxo_count
     split_threshold=$kmd_split_threshold
-elif [[ "${coin}" = "BTC" ]]; then
-    target_utxo_count=$btc_target_utxo_count
-    split_threshold=$btc_split_threshold
 else
     target_utxo_count=$other_target_utxo_count
     split_threshold=$other_split_threshold
 fi
 
 satoshis=10000
-if [[ ${coin} = "GAME" || ${coin} = "EMC2" ]] ; then
-    satoshis=100000
-fi
 amount=$(calc $satoshis/100000000)
 
 unlocked_utxos=$(${cli} listunspent | jq -r '.[].amount' | grep ${amount} | wc -l)
