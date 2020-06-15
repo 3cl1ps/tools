@@ -1,6 +1,7 @@
 #!/bin/bash
 # Adopted from "Split NN script by Decker"
 # uses blockchair.com to estimate the best fee to use, to count the mempool, and to show the USD value of BTC
+source /home/eclips/tools/main
 
 NN_ADDRESS=$BTCADDRESS # fill your NN address here
 NN_PUBKEY=$PUBKEY # fill your pubkey here
