@@ -37,16 +37,13 @@ else
     split_threshold=$other_split_threshold
 fi
 
-#satoshis=10000
-#amount=$(calc $satoshis/100000000)
 unlocked_utxos=$(${cli} listunspent | grep 0.00010000 | wc -l) 
 locked_utxos=$(${cli} listlockunspent | jq -r length)
 utxo_count=$(calc ${unlocked_utxos}+${locked_utxos})
 
-echo $coin $utxo_count :: $unlocked_utxos :: $locked_utxos ::: $split_threshold
 if [[ ${utxo_count} -le ${split_threshold} ]]; then
     if [[ "${coin}" = "BTC" ]]; then
-#        /home/eclips/tools/btcsplit.sh
+        /home/eclips/tools/btcsplit.sh
         exit
     fi
     utxo_required=$(calc ${target_utxo_count}-${utxo_count})
