@@ -39,7 +39,7 @@ fi
 
 #satoshis=10000
 #amount=$(calc $satoshis/100000000)
-unlocked_utxos=$(${cli} listunspent | jq -r '.[].amount' | grep .00010000 | wc -l) 
+unlocked_utxos=$(${cli} listunspent | grep 0.00010000 | wc -l) 
 locked_utxos=$(${cli} listlockunspent | jq -r length)
 utxo_count=$(calc ${unlocked_utxos}+${locked_utxos})
 
