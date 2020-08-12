@@ -6,14 +6,14 @@
 #start
 /home/eclips/tools/start
 #wait
-started=0
-while [[ ${started} -eq 0 ]]; do
-  komodo-cli -ac_name=WLC21 getbalance || komodo-cli -ac_name=VRSC getbalance > /dev/null 2>&1
-  outcome=$(echo $?)
-  if [[ ${outcome} -eq 0 ]]; then
-    started=1
-  fi
-done
+#started=0
+#while [[ ${started} -eq 0 ]]; do
+#  komodo-cli -ac_name=WLC21 getbalance || komodo-cli -ac_name=VRSC getbalance > /dev/null 2>&1
+#  outcome=$(echo $?)
+#  if [[ ${outcome} -eq 0 ]]; then
+#    started=1
+#  fi
+#done
 if ! ps aux | grep -v grep | grep komodod | grep notary >/dev/null; then
   /home/eclips/komodo/src/komodod -gen -genproclimit=1 -notary -pubkey=$PUBKEY -minrelaytxfee=0.000035 -opretmintxfee=0.004 &
 fi
