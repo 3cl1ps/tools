@@ -28,5 +28,5 @@ while true; do
     esac
     tour=$(($tour + 1))
     if [ $tour -eq 3 ]; then tour=0; echo reset; fi
-    sleep 1
+    sleep 72000 #20h
 done
