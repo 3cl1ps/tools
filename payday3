@@ -18,12 +18,9 @@ curlport=7771
 
 if [ $# -eq 0 ]
 then
-    echo "No arguments supplied"
+    echo "No arguments supplied : addr"
     exit
 fi
-
-echo -e 'SendAway Script v0.01alpha (c) '${GREEN}Decker${RESET}, 2018
-echo    '-------------------------------------------'
 
 curl -s --user $rpcuser:$rpcpassword --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "listunspent", "params": [0, 9999999]}' -H 'content-type: text/plain;' http://127.0.0.1:$curlport/ | jq .result > $curdir/createrawtx.txt
 # we will send all spendable and generated coins
@@ -33,17 +30,17 @@ balance=$(echo "scale=8; $balance/1*1" | bc -l | sed 's/^\./0./')
 tosend=$balance
 change=$(echo "scale=8; ($balance-$tosend)/1*1" | bc -l | sed 's/^\./0./')
 
-echo 'Balance: '$balance
-echo 'To send: '$tosend
-echo ' Change: '$change
-
-# first address is where you want to send to, second address in your NN address for change (!), if tosend != balance
-# don't forget to change it ... 
-
+nbTransactions=$(cat $curdir/createrawtx.txt | jq -c '.[] | select (.spendable == true and .generated == true)' | wc -l)
 if (( $(echo "$change > 0" | bc -l) )); then
-    addresses='{"RGuLH8hHkgBSXToUa5mXKUL6SYSPmfvM1K":'$tosend',$1:'$change'}'
+    addresses='{'$1':'$tosend','$KMDADDRESS':'$change'}'
 else
-    addresses='{"RGuLH8hHkgBSXToUa5mXKUL6SYSPmfvM1K":'$tosend'}'
+    addresses='{'$1':'$tosend'}'
+fi
+
+if [ 1 -eq "$(echo "${tosend} < 20" | bc)" ]
+then  
+    echo debug : $1 , $nbTransactions , $tosend
+    exit 1
 fi
 
 echo "{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", \"method\": \"createrawtransaction\", \"params\": [$transactions,$addresses] }" > $curdir/createrawtx.curl
@@ -60,13 +57,12 @@ signed=$(curl -s --user $rpcuser:$rpcpassword --data-binary '{"jsonrpc": "1.0", 
 
 #curl -s --user $rpcuser:$rpcpassword --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "decoderawtransaction", "params": ["'$signed'"]}' -H 'content-type: text/plain;' http://127.0.0.1:$curlport/  | jq 
 
-echo -e '\n'
-echo -e ${YELLOW}'Unsigned TX: '${RESET}$hex
-echo -e '\n'
-echo -e ${YELLOW}'Signed TX: '${RESET}$signed
-echo -e '\n'
-echo -e 'Now you are able to broadcast your signed tx via "sendrawtransaction" or in any Insight Explorer. '${GREEN}'Verify it before broadcast!'${RESET}
+#echo -e ${YELLOW}'Unsigned TX: '${RESET}$hex
+#echo -e '\n'
+#echo -e ${YELLOW}'Signed TX: '${RESET}$signed
+#echo -e '\n'
+#echo -e 'Now you are able to broadcast your signed tx via "sendrawtransaction" or in any Insight Explorer. '${GREEN}'Verify it before broadcast!'${RESET}
 
-# actually send
+echo envoi , $1 , $tosend
 echo "{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", \"method\": \"sendrawtransaction\", \"params\": [\"$signed\"] }" > $curdir/createrawtx.curl
-curl -s --user $rpcuser:$rpcpassword --data-binary "@$curdir/createrawtx.curl" -H 'content-type: text/plain;' http://127.0.0.1:$curlport/
+#curl -s --user $rpcuser:$rpcpassword --data-binary "@$curdir/createrawtx.curl" -H 'content-type: text/plain;' http://127.0.0.1:$curlport/
