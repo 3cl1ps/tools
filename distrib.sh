@@ -1,7 +1,7 @@
 #!/bin/bash
 addr_ecl=RYFxQivEUrPor7Xmfu1dGECsKGSLewdtXa
 addr_lud=RYFxQivEUrPor7Xmfu1dGECsKGSLewdtXa
-addr_yassin=RBTSQxYFx32sXN3A5js9PQsK4ZPGEzZ5Ep
+addr_yassin=RMYE5A2qPwWYXKjELBfa2jTfPj3FFdsCFD
 triggerPai=8
 balance=$(komodo-cli getbalance)
 echo $balance
