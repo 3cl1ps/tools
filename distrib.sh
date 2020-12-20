@@ -1,6 +1,6 @@
 #!/bin/bash
 addr_ecl=RYFxQivEUrPor7Xmfu1dGECsKGSLewdtXa
-addr_lud=RYFxQivEUrPor7Xmfu1dGECsKGSLewdtXa
+addr_lud=RLuMarLEz4M956kJ25YLe6jWDawYxeq9Qj
 addr_yassin=RMYE5A2qPwWYXKjELBfa2jTfPj3FFdsCFD
 triggerPai=8
 balance=$(komodo-cli getbalance)
@@ -14,21 +14,21 @@ while true; do
             while ! ./payday3 $addr; do  
                 sleep 1
             done
-            echo paiement yassin
+            #echo paiement yassin
             ;;
         1)
             addr=$addr_lud
             while ! ./payday3 $addr; do  
                 sleep 1
             done
-            echo paiement lud
+            #echo paiement lud
             ;;
         2)
             addr=$addr_ecl
             while ! ./payday3 $addr; do  
                 sleep 1
             done
-            echo paiement eclips
+            #echo paiement eclips
             ;;
         *)
             echo error $tour
