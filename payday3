@@ -39,7 +39,7 @@ fi
 
 if [ 1 -eq "$(echo "${tosend} < 20" | bc)" ]
 then  
-    echo debug : $1 , $nbTransactions , $tosend
+    #echo debug : $1 , $nbTransactions , $tosend
     exit 1
 fi
 
@@ -63,6 +63,6 @@ signed=$(curl -s --user $rpcuser:$rpcpassword --data-binary '{"jsonrpc": "1.0", 
 #echo -e '\n'
 #echo -e 'Now you are able to broadcast your signed tx via "sendrawtransaction" or in any Insight Explorer. '${GREEN}'Verify it before broadcast!'${RESET}
 
-echo envoi , $1 , $tosend
+echo "$1 ; $tosend"
 echo "{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", \"method\": \"sendrawtransaction\", \"params\": [\"$signed\"] }" > $curdir/createrawtx.curl
 #curl -s --user $rpcuser:$rpcpassword --data-binary "@$curdir/createrawtx.curl" -H 'content-type: text/plain;' http://127.0.0.1:$curlport/
