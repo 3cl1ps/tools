@@ -8,24 +8,24 @@ while true; do
     case $tour in
         0)
             addr=$addr_yassin
+            echo -n "paiement yassin;"
             while ! ./payday3 $addr; do  
                 sleep 1
             done
-            echo -n "paiement yassin;"
             ;;
         1)
             addr=$addr_lud
+            echo -n "paiement ludom;"
             while ! ./payday3 $addr; do  
                 sleep 1
             done
-            echo -n "paiement ludom;"
             ;;
         2)
             addr=$addr_ecl
+            echo -n "paiement eclips;"
             while ! ./payday3 $addr; do  
                 sleep 1
             done
-            echo -n "paiement eclips;"
             ;;
         *)
             echo error $tour
