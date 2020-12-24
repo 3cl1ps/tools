@@ -14,21 +14,21 @@ while true; do
             while ! ./payday3 $addr; do  
                 sleep 1
             done
-            #echo paiement yassin
+            echo -n paiement yassin;
             ;;
         1)
             addr=$addr_lud
             while ! ./payday3 $addr; do  
                 sleep 1
             done
-            #echo paiement lud
+            echo -n paiement ludom;
             ;;
         2)
             addr=$addr_ecl
             while ! ./payday3 $addr; do  
                 sleep 1
             done
-            #echo paiement eclips
+            echo -n paiement eclips;
             ;;
         *)
             echo error $tour
