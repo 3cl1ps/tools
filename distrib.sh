@@ -2,9 +2,6 @@
 addr_ecl=RYFxQivEUrPor7Xmfu1dGECsKGSLewdtXa
 addr_lud=RLuMarLEz4M956kJ25YLe6jWDawYxeq9Qj
 addr_yassin=RMYE5A2qPwWYXKjELBfa2jTfPj3FFdsCFD
-triggerPai=8
-balance=$(komodo-cli getbalance)
-echo $balance
 
 tour=0
 while true; do
