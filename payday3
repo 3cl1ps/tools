@@ -32,9 +32,9 @@ change=$(echo "scale=8; ($balance-$tosend)/1*1" | bc -l | sed 's/^\./0./')
 
 nbTransactions=$(cat $curdir/createrawtx.txt | jq -c '.[] | select (.spendable == true and .generated == true)' | wc -l)
 if (( $(echo "$change > 0" | bc -l) )); then
-    addresses='{'$1':'$tosend','$KMDADDRESS':'$change'}'
+    addresses='{"'$1'":'$tosend',"'$KMDADDRESS'":'$change'}'
 else
-    addresses='{'$1':'$tosend'}'
+    addresses='{"'$1'":'$tosend'}'
 fi
 
 if [ 1 -eq "$(echo "${tosend} < 20" | bc)" ]
@@ -65,4 +65,4 @@ signed=$(curl -s --user $rpcuser:$rpcpassword --data-binary '{"jsonrpc": "1.0", 
 
 echo "$1 ; $tosend" >> /home/eclips/paiements.csv
 echo "{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", \"method\": \"sendrawtransaction\", \"params\": [\"$signed\"] }" > $curdir/createrawtx.curl
-#curl -s --user $rpcuser:$rpcpassword --data-binary "@$curdir/createrawtx.curl" -H 'content-type: text/plain;' http://127.0.0.1:$curlport/
+curl -s --user $rpcuser:$rpcpassword --data-binary "@$curdir/createrawtx.curl" -H 'content-type: text/plain;' http://127.0.0.1:$curlport/
