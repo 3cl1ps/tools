@@ -33,6 +33,7 @@ while true; do
     esac
     tour=$(($tour + 1))
     if [ $tour -eq 3 ]; then tour=0; echo reset; fi
-    #sleep 72000 #20h
+    /home/eclips/tools/cleanwallettransactions.sh >/dev/null >> /tmp/resetwalletkmd.log
+    /home/eclips/tools/consolidateutxos.sh "KMD" 0.0001 >/dev/null >> /tmp/resetwalletkmd.log
     sleep 1
 done
