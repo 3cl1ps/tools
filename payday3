@@ -37,7 +37,7 @@ else
     addresses='{"'$1'":'$tosend'}'
 fi
 
-if [ 1 -eq "$(echo "${tosend} < 20" | bc)" ]
+if [ 1 -eq "$(echo "${tosend} < 10" | bc)" ]
 then  
     #echo debug : $1 , $nbTransactions , $tosend
     exit 1
