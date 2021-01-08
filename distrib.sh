@@ -10,21 +10,21 @@ while true; do
             addr=$addr_yassin
             echo -n "paiement yassin;"
             while ! ./payday3 $addr; do  
-                sleep 60
+                sleep 300
             done
             ;;
         1)
             addr=$addr_lud
             echo -n "paiement ludom;"
             while ! ./payday3 $addr; do  
-                sleep 60
+                sleep 300
             done
             ;;
         2)
             addr=$addr_ecl
             echo -n "paiement eclips;"
             while ! ./payday3 $addr; do  
-                sleep 60
+                sleep 300
             done
             ;;
         *)
