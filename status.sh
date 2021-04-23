@@ -120,7 +120,7 @@ if ps aux | grep -v grep | grep litecoind >/dev/null; then
         fi
 
         if [ -e /home/eclips/.litecoin/wallet.dat ]; then
-            SIZE=$(stat --printf="%s" /home/eclips/.litecoin/wallet.dat)
+            SIZE=$(stat --printf="%s" /home/eclips/.litecoin/wallets/wallet.dat)
         fi
         OUTSTR=$(echo $SIZE | numfmt --to=si --suffix=B)
         if [ "$SIZE" -gt "4000000" ]; then
