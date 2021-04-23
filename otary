@@ -1,5 +1,5 @@
 cd /home/eclips/dPoW/iguana
-./m_notary_build && ./m_notary_KMD
+./m_notary_build && ./m_notary_LTC
 #sleep 400
 #/home/eclips/tools/7776/THC_7776
 #./dpowassets
