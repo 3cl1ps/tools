@@ -1,4 +1,4 @@
-bitcoind -deprecatedrpc=estimatefee &
+litecoind &
 /home/eclips/komodo/src/komodod -gen -genproclimit=1 -notary -pubkey=$PUBKEY -minrelaytxfee=0.000035 -opretmintxfee=0.004 & 
 sleep 10
 cd /home/eclips/komodo/src
