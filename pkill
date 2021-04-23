@@ -1,8 +1,10 @@
 pkill -f iguana
 /home/eclips/komodo/src/komodo-cli stop
 bitcoin-cli stop
+litecoin-cli stop
 /home/eclips/tools/assets-cli stop
 sleep 60
 pkill -f komodod
 pkill -f bitcoind
+pkill -f litecoind
 rm /home/eclips/nohup.out
