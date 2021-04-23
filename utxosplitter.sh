@@ -5,13 +5,8 @@ cd "${BASH_SOURCE%/*}" || exit
 # e.g "KMD"
 coin=$1
 
-kmd_target_utxo_count=50
-kmd_split_threshold=20
-
-btc_split_threshold=20
-
-other_target_utxo_count=30
-other_split_threshold=10
+target_utxo_count=50
+split_threshold=20
 
 date=$(date +%Y-%m-%d:%H:%M:%S)
 
@@ -27,15 +22,6 @@ exit;
 fi
 
 cli=$(./listclis.sh ${coin})
-if [[ "${coin}" = "KMD" ]]; then
-    target_utxo_count=$kmd_target_utxo_count
-    split_threshold=$kmd_split_threshold
-elif [[ "${coin}" = "LTC" ]]; then
-    split_threshold=$btc_split_threshold
-else
-    target_utxo_count=$other_target_utxo_count
-    split_threshold=$other_split_threshold
-fi
 
 unlocked_utxos=$(${cli} listunspent | grep 0.00010000 | wc -l) 
 locked_utxos=$(${cli} listlockunspent | jq -r length)
