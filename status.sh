@@ -238,5 +238,3 @@ if ps aux | grep -v grep | grep litecoind >/dev/null; then
 else
     printf "${RED}Litecoin Not Running${NC}"
 fi
-printf "\n"
-done
