@@ -169,7 +169,7 @@ printf "\n"
 if ps aux | grep -v grep | grep litecoind >/dev/null; then
     balance="$(litecoin-cli -rpcclienttimeout=15 getbalance 2>&1)"
     if [[ $balance =~ $isNumber ]]; then
-        printf "${GREEN}%-9s${NC}" "bitcoind"
+        printf "${GREEN}%-9s${NC}" "litecoind"
         if (( $(echo "$balance > 0.1" | bc -l) )); then
             printf " - Funds: ${GREEN}%10.2f${NC}" $balance
         else
@@ -224,7 +224,7 @@ if ps aux | grep -v grep | grep litecoind >/dev/null; then
             printf " - Speed3: ${GREEN}%2s${NC}" $speed
         fi
     else
-        printf "${YELLOW}Bitcoin Loading${NC}"
+        printf "${YELLOW}Litecoin Loading${NC}"
     fi
     balance=""
     listunspent=""
@@ -236,7 +236,7 @@ if ps aux | grep -v grep | grep litecoind >/dev/null; then
     txinfo=""
     lastntrztime=""
 else
-    printf "${RED}Bitcoin Not Running${NC}"
+    printf "${RED}Litecoin Not Running${NC}"
 fi
 printf "\n"
 
