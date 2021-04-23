@@ -2,5 +2,5 @@
 cd "${BASH_SOURCE%/*}" || exit
 
 echo "KMD"
-echo "BTC"
+echo "LTC"
 /home/eclips/komodo/src/listassetchains
